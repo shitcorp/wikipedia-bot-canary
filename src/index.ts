@@ -1,7 +1,31 @@
 import * as Sentry from "@sentry/node"
 import * as Tracing from "@sentry/tracing"
+import i18next from 'i18next';
+import Backend from 'i18next-fs-backend';
 
 import { api } from './api/server'
+
+i18next.use(Backend).init({
+    lng: 'en',
+    fallbackLng: 'en',
+    preload: ['en'],
+    ns: ['translation'],
+    defaultNS: 'translation',
+    backend: {
+        // path where resources get loaded from, or a function
+        // returning a path:
+        // function(lngs, namespaces) { return customPath; }
+        // the returned path will interpolate lng, ns if provided like giving a static path
+        loadPath: 'src/locales/{{lng}}/{{ns}}.json',
+
+        // path to post missing resources
+        addPath: 'src/locales/{{lng}}/{{ns}}.missing.json'
+    },
+    debug: true,
+})
+
+// specify lang ex:
+// t('welcome', { lng: 'en' })
 
 Sentry.init({
     dsn: "",
