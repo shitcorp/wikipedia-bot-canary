@@ -4,8 +4,11 @@ import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
 
 import { api } from './api/server'
+import { i18nextLogger } from "./utils";
 
-i18next.use(Backend).init({
+
+// init internationalization
+i18next.use(Backend).use(i18nextLogger).init({
     lng: 'en',
     fallbackLng: 'en',
     preload: ['en'],
@@ -21,12 +24,14 @@ i18next.use(Backend).init({
         // path to post missing resources
         addPath: 'src/locales/{{lng}}/{{ns}}.missing.json'
     },
-    debug: true,
+    debug: false,
 })
 
 // specify lang ex:
 // t('welcome', { lng: 'en' })
 
+
+// init sentry
 Sentry.init({
     dsn: "",
 
@@ -53,6 +58,7 @@ Sentry.init({
         return event;
     },
 
+    // how much of each `event` we want
     tracesSampler: (samplingContext) => {
         switch (samplingContext.transactionContext.op) {
             case 'start api':

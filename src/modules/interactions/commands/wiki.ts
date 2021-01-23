@@ -1,4 +1,5 @@
 import wiki from '../../wiki/functions';
+import {logger} from "../../../utils";
 
 export const raw = {
     name: "wiki",
@@ -65,7 +66,7 @@ export const command = {
      
         
         for(const option in data.options) {
-            console.log(option, data.options[option])
+            logger.info(option, data.options[option])
             const temp = data.options[option]
             if (temp.name === 'search-term') {
                 searchValue = temp.value
@@ -76,10 +77,10 @@ export const command = {
             }
         }
 
-        console.log(searchLang)
+        logger.info(searchLang)
 
         const returnedObject = await wiki.getSummary(searchValue, searchLang)
-        console.log(returnedObject)
+        logger.info(returnedObject)
         //await client.slash.methods.reply(interaction, returnedObject.results[3].substr(0, 900))
 
         if (!returnedObject.error) {

@@ -1,6 +1,7 @@
 import winston from "winston"
 import {NextFunction, Request, Response} from "express";
 import DailyRotateFile from 'winston-daily-rotate-file';
+import {LoggerModule} from "i18next";
 
 const dailyRotateFile = new DailyRotateFile({
   filename: './logs/%DATE%.log',
@@ -44,5 +45,19 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export const expressLogger = (req: Request, res: Response, done: NextFunction) => {
-logger.info(`${req.method} ${req.url} ${req.statusCode}`)
+  logger.info(`${req.method} ${req.url} ${req.statusCode}`)
+}
+
+export const i18nextLogger: LoggerModule = {
+  type: 'logger',
+
+  log: function (args) {
+    logger.info(args)
+  },
+  warn: function(args) {
+    logger.warning(args)
+  },
+  error: function(args) {
+    logger.error(args)
+  }
 }

@@ -1,4 +1,5 @@
 import { route } from './../../api/routes/api/v1/_TEMPLATE';
+import {logger} from "../../utils";
 const request = require('centra');
 
 const baseUrl = '';
@@ -27,7 +28,7 @@ const req = async (route:String, method:String, body:any):Promise<Object> => {
 	} else if (res.statusCode >= 400 && res.statusCode < 500) {
 		throw res.text;
 	} else {
-		console.log(`reattempting, status code: ${res.statusCode}`);
+		logger.warning(`reattempting, status code: ${res.statusCode}`);
 		return await req(route, method, body);
 	}
 };

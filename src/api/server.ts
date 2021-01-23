@@ -3,7 +3,7 @@ import fs from "fs"
 import path from "path"
 import * as Sentry from "@sentry/node"
 
-import {expressLogger} from "../utils";
+import {expressLogger, logger} from "../utils";
 
 export class api {
   app: express.Application
@@ -49,7 +49,7 @@ export class api {
               this.app.get("/api/v1/" + routeFile.route.name, (req, res) =>
                 routeFile.route.route(req, res)
               )
-              console.log(
+              logger.info(
                 `[API] Registering the route /api/v1/${routeFile.route.name} [GET]`
               )
               break
@@ -57,7 +57,7 @@ export class api {
               this.app.post("/api/v1/" + routeFile.route.name, (req, res) =>
                 routeFile.route.route(req, res)
               )
-              console.log(
+              logger.info(
                 `[API] Registering the route /api/v1/${routeFile.route.name} [POST]`
               )
               break
@@ -69,7 +69,7 @@ export class api {
     this.app.use(Sentry.Handlers.errorHandler());
 
     this.app.listen(PORT, () => {
-      console.log(`[API] App is listening on port ${PORT}`)
+      logger.info(`[API] App is listening on port ${PORT}`)
     })
   }
 }
