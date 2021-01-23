@@ -10,7 +10,13 @@
     "build:dev": "concurrently \"tsc --watch\" \"nodemon ./dist/index.js\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Community",
+  "contributors": [
+    {
+      "name": "MeerBiene",
+      "url": "https://github.com/MeerBiene"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "@sentry/node": "^6.0.1",
