@@ -89,8 +89,9 @@ const startServer = Sentry.startTransaction({
 });
 
 try {
-    const server = new api(3420, 'INSTANCE001')
+    new api(3420, 'INSTANCE001')
 } catch (error) {
+    console.log(error)
     Sentry.captureException(error);
     logger.error(inspect(error));
 } finally {
