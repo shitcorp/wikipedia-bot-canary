@@ -1,7 +1,7 @@
 const wiki = require("wikijs").default;
 
 let { apiUrl, headers, wiki_logo } = require("../constants/Constants");
-export const wikifunctions = {
+export default {
   /**
    * Function that returns a returnobject with an error or the requested information
    * @function getSummary
