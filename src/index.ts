@@ -21,7 +21,7 @@ i18next.use(Backend).init({
         // path to post missing resources
         addPath: 'src/locales/{{lng}}/{{ns}}.missing.json'
     },
-    debug: true,
+    debug: false,
 })
 
 // specify lang ex:
@@ -71,8 +71,9 @@ const startServer = Sentry.startTransaction({
 });
 
 try {
-    const server = new api(3420, 'INSTANCE001')
+    new api(3420, 'INSTANCE001')
 } catch (error) {
+    console.log(error)
     Sentry.captureException(error);
 } finally {
     startServer.finish()
