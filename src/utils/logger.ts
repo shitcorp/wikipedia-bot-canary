@@ -23,7 +23,7 @@ const dailyRotatErrorFile = new DailyRotateFile({
 export const logger = winston.createLogger({
   level: "info",
   format: winston.format.json(),
-  defaultMeta: { service: "user-service" },
+  // defaultMeta: { service: "user-service" },
   transports: [
     dailyRotateFile,
     dailyRotatErrorFile,
