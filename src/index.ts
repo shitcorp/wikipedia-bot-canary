@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 import * as Sentry from "@sentry/node"
 import * as Tracing from "@sentry/tracing"
 import i18next from 'i18next';
@@ -39,7 +41,7 @@ Sentry.init({
     release: `wikipedia-bot-canary@${process.env.npm_package_version}`,
     environment: process.env.NODE_ENV || 'dev',
     maxBreadcrumbs: 100,
-    serverName: process.env.serverName || 'dev',
+    serverName: process.env.SERVER_NAME || 'dev',
 
     integrations: [
         // enable HTTP calls tracing
@@ -90,6 +92,7 @@ const startServer = Sentry.startTransaction({
 
 try {
     new api(3420, 'INSTANCE001')
+
 } catch (error) {
     console.log(error)
     Sentry.captureException(error);

@@ -1,14 +1,11 @@
 import { Request, Response } from "express";
+import handler from '../../../../modules/interactions/handler';
 import tweetnacl from "tweetnacl";
 
 export const route = {
     name: "interaction",
     method: "POST",
-    route: async (
-        req: any,
-        res: Response,
-        commands: Map<String, any>
-    ): Promise<void> => {
+    route: async (req: any, res: Response, commands: Map<String, any>): Promise<void> => {
         // Your public key can be found on your application in the Developer Portal
         const PUBLIC_KEY = "APPLICATION_PUBLIC_KEY";
 
@@ -24,6 +21,8 @@ export const route = {
 
         if (!isVerified) {
             return res.status(401).end("invalid request signature");
+        } else {
+            handler.interactionhandler(req, res)
         }
     },
 };
