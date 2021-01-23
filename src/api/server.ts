@@ -1,7 +1,9 @@
 import express from "express"
-import morgan from "morgan"
 import fs from "fs"
 import path from "path"
+import * as Sentry from "@sentry/node"
+
+import {expressLogger} from "../utils";
 
 export class api {
   app: express.Application
@@ -14,7 +16,17 @@ export class api {
     this.port = PORT
     this.instance = INSTANCE
 
-    this.app.use(morgan("combined"))
+    // RequestHandler creates a separate execution context using domains, so that every
+    // transaction/span/breadcrumb is attached to its own Hub instance
+    this.app.use(Sentry.Handlers.requestHandler({
+      user: false,
+      // timeout for fatal route errors to be delivered
+      flushTimeout: 5000,
+    }));
+    // TracingHandler creates a trace for every incoming request
+    this.app.use(Sentry.Handlers.tracingHandler());
+
+    this.app.use(expressLogger)
     this.app.use(express.json())
 
     fs.readdirSync(path.join(__dirname + "/routes/api/v1"))
@@ -52,6 +64,9 @@ export class api {
           }
         }
       })
+
+    // send all errors to sentry
+    this.app.use(Sentry.Handlers.errorHandler());
 
     this.app.listen(PORT, () => {
       console.log(`[API] App is listening on port ${PORT}`)
