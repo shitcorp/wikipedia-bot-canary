@@ -1,60 +1,60 @@
-require('dotenv').config()
+(async () => {
+  (await import('dotenv')).config();
+})();
 
 import fs from 'fs';
 import path from 'path';
 import prompts from 'prompts';
-
-const { DiscordInteractions }  = require("slash-commands");
+import { DiscordInteractions } from 'slash-commands';
 
 const config = {
-    applicationId: process.env.APPLICATION_ID,
-    authToken: process.env.TOKEN,
-    publicKey: process.env.PUBLIC_KEY
-}
+  applicationId: process.env.APPLICATION_ID,
+  authToken: process.env.TOKEN,
+  publicKey: process.env.PUBLIC_KEY,
+};
 
-
-
-const choices:Object[] = []
+const choices: unknown[] = [];
 
 fs.readdirSync(path.join(__dirname + '/commands'))
-.filter(f => !f.startsWith("_") && f.endsWith(".js"))
-.forEach(f => {
-        choices.push(
-            { 
-            title: f.replace(".js", ""),
-            value: f
-        })
-        
-    })
-    
+  .filter((f) => !f.startsWith('_') && f.endsWith('.js'))
+  .forEach((f) => {
+    choices.push({
+      title: f.replace('.js', ''),
+      value: f,
+    });
+  });
 
-    const questions:any = [
-    {
-        type: 'multiselect',
-        name: 'commands',
-        message: 'Which command/s do you want to register?',
-        choices,
-    },
-  ];
-  
-  (async () => {
-      const response = await prompts(questions);
+const questions: any = [
+  {
+    type: 'multiselect',
+    name: 'commands',
+    message: 'Which command/s do you want to register?',
+    choices,
+  },
+];
 
-      if (!response.commands) return;
-      
-      const interaction = new DiscordInteractions(config)
+(async () => {
+  const response = await prompts(questions);
 
-      response.commands.forEach(async (c:any) => {
+  if (!response.commands) return;
 
-          const { raw } = require(path.join(__dirname + '/commands/' + c))
-  
-          await interaction
-          .createApplicationCommand(raw)
-          .then((data:any) => {
-              //console.log(data)
-              if (data.message && data.message.includes('401: Unauthorized')) {
-                  // print unauthorized error
-                  console.error(`
+  const interaction = new DiscordInteractions(config);
+
+  for (const c of response.commands) {
+    const { raw } = await import(
+      path.join(__dirname + '/commands/' + c)
+    );
+
+    await interaction
+      .createApplicationCommand(raw)
+      .then((data: any) => {
+        //console.log(data)
+        if (
+          data.message &&
+          data.message.includes('401: Unauthorized')
+        ) {
+          // print unauthorized error
+          console.error(`
                   _________________________________
 
                   [401] Unauthorized
@@ -65,10 +65,10 @@ fs.readdirSync(path.join(__dirname + '/commands'))
                   and try again.
                   
                   _________________________________
-                  `)
-              }
-              if (data.id) {
-                  console.log(`
+                  `);
+        }
+        if (data.id) {
+          console.log(`
                   _________________________________
                   
                   Registered the following command:
@@ -78,13 +78,9 @@ fs.readdirSync(path.join(__dirname + '/commands'))
                   Name:        ${data.name}
                   Desc:        ${data.description}
                   
-                  _________________________________`)
-              }
-
-            })
-          .catch(console.error);
-
+                  _________________________________`);
+        }
       })
-
-
-  })();
+      .catch(console.error);
+  }
+})();

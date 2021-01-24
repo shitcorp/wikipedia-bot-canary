@@ -1,7 +1,7 @@
-import winston from "winston"
-import {NextFunction, Request, Response} from "express";
+import winston from 'winston';
+import { NextFunction, Request, Response } from 'express';
 import DailyRotateFile from 'winston-daily-rotate-file';
-import {LoggerModule} from "i18next";
+import { LoggerModule } from 'i18next';
 
 const dailyRotateFile = new DailyRotateFile({
   filename: './logs/%DATE%.log',
@@ -21,43 +21,44 @@ const dailyRotatErrorFile = new DailyRotateFile({
 });
 
 export const logger = winston.createLogger({
-  level: "info",
+  level: 'info',
   format: winston.format.json(),
   // defaultMeta: { service: "user-service" },
-  transports: [
-    dailyRotateFile,
-    dailyRotatErrorFile,
-  ],
-})
+  transports: [dailyRotateFile, dailyRotatErrorFile],
+});
 
 //
 // If we're not in production then log to the `console`
 //
 if (process.env.NODE_ENV !== 'production') {
   logger.add(
-      new winston.transports.Console({
-        format: winston.format.combine(
-            winston.format.colorize(),
-            winston.format.simple(),
-        ),
-      }),
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple(),
+      ),
+    }),
   );
 }
 
-export const expressLogger = (req: Request, res: Response, done: NextFunction) => {
-  logger.info(`${req.method} ${req.url} ${req.statusCode}`)
-}
+export const expressLogger = (
+  req: Request,
+  res: Response,
+  done: NextFunction,
+) => {
+  logger.info(`${req.method} ${req.url} ${req.statusCode}`);
+};
 
 export const i18nextLogger: LoggerModule = {
   type: 'logger',
 
   log: function (args) {
-    logger.info(args)
+    logger.info(args);
   },
-  warn: function(args) {
-    logger.warning(args)
+  warn: function (args) {
+    logger.warning(args);
   },
-  error: function(args) {
-    logger.error(args)
-  }
-}
+  error: function (args) {
+    logger.error(args);
+  },
+};

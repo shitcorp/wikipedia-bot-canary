@@ -1,6 +1,6 @@
-const wiki = require("wikijs").default;
-
+import wiki from 'wikijs';
 import Constants from '../constants/Constants';
+import * as Sentry from '@sentry/node';
 
 export default {
   /**
@@ -21,20 +21,32 @@ export default {
    * }
    *
    */
-  getSummary: async (argument: String, lang = "en") => {
+  getSummary: async (argument: string, lang = 'en') => {
+    let apiUrl: any = Constants.apiUrl;
+    const headers: any = Constants.headers;
+    const apiString: string = apiUrl[lang];
 
-    let apiUrl:any = Constants.apiUrl;
-    let headers:any = Constants.headers;
-    let apiString;
+    const returnobject = {
+      error: false,
+      results: [Promise],
+    };
 
-
-    const returnobject = { error: false, results:[Promise] };
-    apiString = apiUrl[lang];
-    if (apiString === undefined) apiUrl = "https://en.wikipedia.org/w/api.php";
+    if (apiString === undefined)
+      apiUrl = 'https://en.wikipedia.org/w/api.php';
 
     try {
-      const search = await wiki({ apiString, headers }).search(argument);
-      const wikiPage = await wiki({ apiString, headers }).page(search.results[0]);
+      const search = await wiki({
+        apiUrl: apiString,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        headers,
+      }).search(argument);
+      const wikiPage = await wiki({
+        apiUrl: apiString,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        headers,
+      }).page(search.results[0]);
 
       returnobject.results = await Promise.all([
         wikiPage.raw.title,
@@ -44,6 +56,7 @@ export default {
       ]);
     } catch (e) {
       returnobject.error = true;
+      Sentry.captureException(e);
     }
 
     return returnobject;
@@ -66,14 +79,19 @@ export default {
    * }
    *
    */
-  getReferences: async (argument: String) => {
-    const returnobject = { error: false, results: [Promise] };
-    let headers = Constants.headers;
+  getReferences: async (argument: string) => {
+    const returnobject = {
+      error: false,
+      results: [Promise],
+    };
+    const headers = Constants.headers;
 
     try {
-      const sourceSearch = await wiki({ headers }).search(argument);
+      const sourceSearch = await wiki({ headers }).search(
+        argument,
+      );
       const wikiPageSources = await wiki({ headers }).page(
-        sourceSearch.results[0]
+        sourceSearch.results[0],
       );
 
       const sourceResults = await Promise.all([
@@ -86,6 +104,7 @@ export default {
       returnobject.results = sourceResults;
     } catch (e) {
       returnobject.error = true;
+      Sentry.captureException(e);
     }
 
     return returnobject;
@@ -101,8 +120,12 @@ export default {
    *      info: wikipediaPage.info
    * }
    */
-  getShortInformation: async (argument: String) => {
-    const returnobject = { error: false, page: '', info: ''};
+  getShortInformation: async (argument: string) => {
+    const returnobject = {
+      error: false,
+      page: '',
+      info: '',
+    };
 
     try {
       const data = await wiki().search(argument);
@@ -113,6 +136,7 @@ export default {
       returnobject.info = info;
     } catch (e) {
       returnobject.error = true;
+      Sentry.captureException(e);
     }
 
     return returnobject;

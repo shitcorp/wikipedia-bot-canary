@@ -1,6 +1,5 @@
-export interface config{
-    _id: String,
-    lang: String,
-    channelblacklist: String[]
-    
+export interface config {
+  _id: string;
+  lang: string;
+  channelblacklist: string[];
 }

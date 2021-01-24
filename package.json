@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && node ./dist/index.js",
-    "build": "tsc && node ./dist index.js",
+    "start": "node ./dist/index.js",
+    "prebuild": "yarn lint",
+    "build": "tsc",
     "build:dev": "concurrently \"tsc --watch\" \"nodemon ./dist/index.js\"",
-    "register": "node ./dist/modules/interactions/register.js"
+    "preregister": "yarn build",
+    "register": "node ./dist/modules/interactions/register.js",
+    "lint": "eslint src/**/*.{ts,tsx} --quiet --fix",
+    "commit": "cz"
   },
   "keywords": [],
   "author": "Community",
@@ -22,7 +26,6 @@
   "dependencies": {
     "@sentry/node": "^6.0.1",
     "@sentry/tracing": "^6.0.1",
-    "body-parser": "^1.19.0",
     "centra": "^2.4.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -44,9 +47,15 @@
     "@types/node": "^14.14.22",
     "@types/prompts": "^2.0.9",
     "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
     "concurrently": "^5.3.0",
-    "cz-conventional-changelog": "^3.3.0",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "nodemon": "^2.0.7",
+    "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   },
   "config": {
