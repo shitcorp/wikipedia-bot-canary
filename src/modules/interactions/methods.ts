@@ -1,10 +1,13 @@
 import c from 'centra';
 
-import { logger } from '../../utils';
-import Constants from '../constants/Constants';
-import * as Sentry from '@sentry/node';
+import c from "centra";
 
-const appId: any = process.env.APPLICATION_ID?.toString();
+import { interaction } from './../../models/interaction';
+import { logger } from "./../../utils/logger";
+import Constants from "../constants/Constants";
+
+const appIdRaw:any =  process.env.APPLICATION_ID 
+const appId: any = appIdRaw.toString();
 
 const endpointGenerator = {
   reply: (
@@ -25,6 +28,7 @@ const endpointGenerator = {
 
 export default {
   // use this for initial reply and edit the response later on
+  reply: async (interaction: interaction, msg: String, type = 3): Promise<any> => {
   reply: async (
     interaction: any,
     msg: string,
@@ -74,18 +78,11 @@ export default {
       return returnobject;
     }
   },
-  send: async (
-    interactionToken: any,
-    data: any,
-    type = 3,
-  ) => {
-    const endpoint = endpointGenerator.send(
-      Constants.interactionEndpoints.create_followup_msg,
-      interactionToken,
-    );
-    return await c(endpoint, 'POST')
-      .body({ type, data }, 'json')
-      .send();
+  send: async (interactionToken: any, data: any, type = 3) => {
+      const endpoint = endpointGenerator.send(Constants.interactionEndpoints.create_followup_msg, interactionToken)
+      return await c(endpoint, 'POST')
+        .body({ data }, 'json')
+        .send()
   },
   deleteOriginal: async (interactionToken: any) => {
     const endpoint = endpointGenerator.send(
@@ -135,6 +132,31 @@ export default {
         )
         .send();
     },
+
+  defaultEmbed: async (interactionToken:any, { title, desc }:{title:String, desc:String}) => {
+    let color:any = Constants.Colors['BLUE'];
+
+    const endpoint = endpointGenerator.send(Constants.interactionEndpoints.create_followup_msg, interactionToken)
+
+    return await c(endpoint, 'POST')
+      .body({
+        embeds: [
+          {
+            color,
+            title: title,
+            description: desc,
+            author: {
+              name: 'Wikipedia',
+              icon_url: Constants.wiki_logo
+            },
+          }
+        ]
+      }, 'json')
+      .send()
+
+  },
+  defaultErrorEmbed: async (interactionToken:any, errormessage:any) => {
+    let color:any = Constants.Colors["RED"];
 
     defaultErrorEmbed: async (
       interactionToken: any,

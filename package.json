@@ -18,11 +18,22 @@
   "author": "Community",
   "contributors": [
     {
-      "name": "MeerBiene#7060",
+      "name": "MeerBiene",
       "url": "https://github.com/MeerBiene"
+    },
+    {
+      "name": "Huskydog9988",
+      "url": "https://github.com/Huskydog9988"
     }
   ],
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wikipedia-bot/wikipedia-bot-canary.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wikipedia-bot/wikipedia-bot-canary/issues"
+  },
+  "license": "MIT",
   "dependencies": {
     "@sentry/node": "^6.0.1",
     "@sentry/tracing": "^6.0.1",

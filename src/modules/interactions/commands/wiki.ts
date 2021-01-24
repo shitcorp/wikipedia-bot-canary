@@ -1,6 +1,7 @@
 import wiki from '../../wiki/functions';
 import { logger } from '../../../utils';
 import methods from '../methods';
+import {interaction} from '../../../models/interaction';
 
 export const raw = {
   name: 'wiki',
@@ -56,21 +57,39 @@ export const raw = {
 };
 
 export const command = {
-  // the id that discord returned us, we will need this
-  // for the interaction handler
-  id: '802662348154339328',
-  name: 'wiki',
-  execute: async (interaction: any): Promise<void> => {
-    // send an initial response to edit later
-    const returned = await methods.reply(
-      interaction,
-      'LOADING, PLEASE WAIT ...',
-      4,
-    );
+    // the id that discord returned us, we will need this
+    // for the interaction handler
+    id: "802662348154339328",
+    name: "wiki",
+    help: `Use thecommand as follows:
 
-    const { data } = interaction;
-    let searchValue;
-    let searchLang = 'en';
+        [TODO] (<- if you see this and you are not a developer, plese let the developers know they forgot something)
+    `,
+    execute: async (interaction: interaction): Promise<void> => {
+
+        // send an initial response to edit later
+        const returned = await methods.reply(interaction, "LOADING, PLEASE WAIT ...", 4)
+ 
+
+        
+        let searchValue;
+        let searchLang = 'en';
+
+
+        if (!interaction.data) return;
+
+        for (const option in interaction.data.options) {
+ 
+            const index:any = option;
+            const temp:any = interaction.data.options[index]
+            if (temp.name === 'search-term') {
+                searchValue = temp.value
+            }
+            if (temp.name === 'language') {
+                if (temp.value === '') return;
+                searchLang = temp.value
+            }
+        }
 
     for (const option in data.options) {
       const temp = data.options[option];
