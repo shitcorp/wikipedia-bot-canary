@@ -1,5 +1,6 @@
 import wiki from '../../wiki/functions';
-import {logger} from "../../../utils";
+import { logger } from "../../../utils";
+import methods from '../methods';
 
 export const raw = {
     name: "wiki",
@@ -56,17 +57,22 @@ export const raw = {
 export const command = {
     // the id that discord returned us, we will need this
     // for the interaction handler
-    id: "802496465313857557",
+    id: "802662348154339328",
     name: "wiki",
-    execute: async (interaction:any):Promise<void> => {
+    execute: async (interaction: any): Promise<void> => {
+
+        // send an initial response to edit later
+        const returned = await methods.reply(interaction, "LOADING, PLEASE WAIT ...", 4)
+ 
+
         const { data } = interaction
         let searchValue;
         let searchLang = 'en';
 
-     
-        
-        for(const option in data.options) {
-            logger.info(option, data.options[option])
+
+
+        for (const option in data.options) {
+ 
             const temp = data.options[option]
             if (temp.name === 'search-term') {
                 searchValue = temp.value
@@ -77,17 +83,25 @@ export const command = {
             }
         }
 
-        logger.info(searchLang)
-
         const returnedObject = await wiki.getSummary(searchValue, searchLang)
-        logger.info(returnedObject)
-        //await client.slash.methods.reply(interaction, returnedObject.results[3].substr(0, 900))
 
-        if (!returnedObject.error) {
-            // send the results to discord
+
+        if (returnedObject.error === true) {
+            await methods.deleteOriginal(returned.data.token)
+            await methods.embed.defaultErrorEmbed(returned.data.token, 'Something went wrong .... :(  maybe try another search term and try again... ')
+        } else {
+            let desc_long: any = await returnedObject.results[3]
+            let desc = desc_long.substr(0, 1169) + "....."
+
+            await methods.deleteOriginal(returned.data.token)
+            await methods.embed.defaultWikiEmbed(returned.data.token, {
+                title: returnedObject.results[0],
+                url: returnedObject.results[1],
+                thumb: returnedObject.results[2],
+                desc,
+            })
+
         }
-
-
 
     }
 };

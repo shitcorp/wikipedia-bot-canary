@@ -14,8 +14,8 @@ const setToken = (authToken:any) => {
 	headers['X-Auth-Token'] = authToken;
 };
 
-const req = async (route:String, method:String, body:any):Promise<Object> => {
-	route = baseUrl + route;
+const req = async (route:String, method:String, body:any):Promise<any> => {
+	
 	const fetch = request(route, method);
 	fetch.reqHeaders = headers;
 	const res = await fetch.body(body).send();
@@ -26,7 +26,7 @@ const req = async (route:String, method:String, body:any):Promise<Object> => {
 			return { status: res.statusCode };
 		}
 	} else if (res.statusCode >= 400 && res.statusCode < 500) {
-		throw res.text;
+		logger.info(res.statusCode)
 	} else {
 		logger.warning(`reattempting, status code: ${res.statusCode}`);
 		return await req(route, method, body);
