@@ -42,7 +42,7 @@ export const route = {
             if (commands.has(interaction.data.id)) {
                 let func = commands.get(interaction.data.id)
                 try {
-                    func(interaction)
+                    func.execute(interaction)
                     logger.info(`[INTERACTION] Received interaction: '${interaction.data.name}'; by user: '${interaction.member.user.username}#${interaction.member.user.discriminator}';`)
                 } catch(e) {
                     logger.error(e)

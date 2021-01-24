@@ -44,19 +44,19 @@ export class api {
       
       
       fs.readdirSync(path.join(__dirname + "../../modules/interactions/commands"))
-        .filter((file) => !file.startsWith("_") && file.endsWith(".js"))
-        .forEach((f) => {
-          const interaction = require("../modules/interactions/commands/" + f);
-          commands.set(interaction.command.id, interaction.command.execute);
-        });
+      .filter((file) => !file.startsWith("_") && file.endsWith(".js"))
+      .forEach((f) => {
+        const interaction = require("../modules/interactions/commands/" + f);
+        if (interaction.command.id === 'ID' || interaction.command.id === '') return;
+        commands.set(interaction.command.id, interaction.command);
+      });
       
-
+      
       this.app.use(bodyparser.json({
         verify: (req:any, res, buf) => {
           req.rawBody = buf
         }
       }))
-      
       
       this.app.post("/api/:version/:endpoint", (req, res) => {
         const apiVersionn = req.params.version
@@ -64,26 +64,21 @@ export class api {
       })
       
       
+      
 
-    // RequestHandler creates a separate execution context using domains, so that every
+      // RequestHandler creates a separate execution context using domains, so that every
     // transaction/span/breadcrumb is attached to its own Hub instance
-    // this.app.use(Sentry.Handlers.requestHandler({
-    //   user: false,
-    //   // timeout for fatal route errors to be delivered
-    //   flushTimeout: 5000,
-    // }));
-    // // TracingHandler creates a trace for every incoming request
-    // this.app.use(Sentry.Handlers.tracingHandler());
-
+    this.app.use(Sentry.Handlers.requestHandler({
+       user: false,
+       // timeout for fatal route errors to be delivered
+       flushTimeout: 5000,
+      }));
+     // TracingHandler creates a trace for every incoming request
+     this.app.use(Sentry.Handlers.tracingHandler());
+     
     this.app.use(expressLogger);
     this.app.use(express.json());
 
-
-    
-
-
-    
-    
 
     // send all errors to sentry
     this.app.use(Sentry.Handlers.errorHandler());
