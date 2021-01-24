@@ -1,55 +1,48 @@
 interface snowflake {
-    snowflake:String
+  snowflake: string;
 }
-
-
 
 interface InteractionType {
-    InteractionType:Number
+  InteractionType: number;
 }
-
-
 
 interface GuildMember {
-    user: {
-        username:String,
-        public_flags:String,
-        id:snowflake,
-        discriminator:String,
-        avatar:String
-    }
-    roles:String[],
-    premium_since:String,
-    permissions:String,
-    pending: Boolean,
-    nick: String,
-    mute: Boolean,
-    joined_at: Date,
-    is_pending: Boolean,
-    deaf: Boolean
+  user: {
+    username: string;
+    public_flags: string;
+    id: snowflake;
+    discriminator: string;
+    avatar: string;
+  };
+  roles: string[];
+  premium_since: string;
+  permissions: string;
+  pending: boolean;
+  nick: string;
+  mute: boolean;
+  joined_at: Date;
+  is_pending: boolean;
+  deaf: boolean;
 }
-
 
 interface ApplicationCommandInteractionDataOption {
-    name:String,
-    value?:any,
-    options?:Object[]
+  name: string;
+  value?: any;
+  options?: Object[];
 }
-
 
 interface ApplicationCommandInteractionData {
-    id:snowflake,
-    name:String,
-    options?:ApplicationCommandInteractionDataOption[]
+  id: snowflake;
+  name: string;
+  options?: ApplicationCommandInteractionDataOption[];
 }
 
-
 export interface interaction {
-    id:snowflake,
-    type:InteractionType, // InteractionType (1-2)
-    token:String,
-    guild_id:String,
-    channel_id:String,
-    member:GuildMember,
-    data?: ApplicationCommandInteractionData
+  id: snowflake;
+  type: InteractionType; // InteractionType (1-2)
+  token: string;
+  guild_id: string;
+  channel_id: string;
+  member: GuildMember;
+  data?: ApplicationCommandInteractionData;
 }
