@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node ./dist/index.js",
-    "build": "tsc",
+    "build": "tsc && node ./dist index.js",
     "build:dev": "concurrently \"tsc --watch\" \"nodemon ./dist/index.js\"",
     "register": "node ./dist/modules/interactions/register.js"
   },
@@ -22,6 +22,7 @@
   "dependencies": {
     "@sentry/node": "^6.0.1",
     "@sentry/tracing": "^6.0.1",
+    "body-parser": "^1.19.0",
     "centra": "^2.4.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -37,6 +38,7 @@
     "winston-daily-rotate-file": "^4.5.0"
   },
   "devDependencies": {
+    "@types/centra": "^2.2.0",
     "@types/express": "^4.17.11",
     "@types/i18next-fs-backend": "^1.0.0",
     "@types/node": "^14.14.22",

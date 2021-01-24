@@ -1,6 +1,7 @@
 const wiki = require("wikijs").default;
 
-let { apiUrl, headers, wiki_logo } = require("../constants/Constants");
+import Constants from '../constants/Constants';
+
 export default {
   /**
    * Function that returns a returnobject with an error or the requested information
@@ -21,13 +22,19 @@ export default {
    *
    */
   getSummary: async (argument: String, lang = "en") => {
+
+    let apiUrl:any = Constants.apiUrl;
+    let headers:any = Constants.headers;
+    let apiString;
+
+
     const returnobject = { error: false, results:[Promise] };
-    apiUrl = apiUrl[lang];
-    if (apiUrl === undefined) apiUrl = "https://en.wikipedia.org/w/api.php";
+    apiString = apiUrl[lang];
+    if (apiString === undefined) apiUrl = "https://en.wikipedia.org/w/api.php";
 
     try {
-      const search = await wiki({ apiUrl, headers }).search(argument);
-      const wikiPage = await wiki({ apiUrl, headers }).page(search.results[0]);
+      const search = await wiki({ apiString, headers }).search(argument);
+      const wikiPage = await wiki({ apiString, headers }).page(search.results[0]);
 
       returnobject.results = await Promise.all([
         wikiPage.raw.title,
@@ -61,6 +68,7 @@ export default {
    */
   getReferences: async (argument: String) => {
     const returnobject = { error: false, results: [Promise] };
+    let headers = Constants.headers;
 
     try {
       const sourceSearch = await wiki({ headers }).search(argument);

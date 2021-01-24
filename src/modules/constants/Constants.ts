@@ -63,7 +63,11 @@ export default {
         // POST
         replyurl: 'https://discord.com/api/v8/interactions/<interaction_id>/<interaction_token>/callback',
         // PATCH
-        edit_initial_response: 'https://discord.com/api/v8/webhooks/<application_id>/<interaction_token>/messages/@original'
+		edit_initial_response: 'https://discord.com/api/v8/webhooks/<application_id>/<interaction_token>/messages/@original',
+		// DELETE
+		delete_original_msg: 'https://discord.com/api/v8/webhooks/<application_id>/<interaction_token>/messages/@original',
+		// POST
+		create_followup_msg: 'https://discord.com/api/v8/webhooks/<application_id>/<interaction_token>'
     }
 
 }
