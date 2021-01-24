@@ -1,10 +1,9 @@
-import express from "express";
-import fs from "fs";
-import path from "path";
-import bodyparser from 'body-parser';
-import * as Sentry from "@sentry/node";
+import express from 'express';
+import { readdirSync } from 'fs';
+import { join } from 'path';
+import * as Sentry from '@sentry/node';
 
-import { expressLogger, logger } from "../utils";
+import { expressLogger, logger } from '../utils';
 
 export class api {
   app: express.Application;
@@ -17,26 +16,33 @@ export class api {
     this.port = PORT;
     this.instance = INSTANCE;
 
-    const commands:Map<String, any> = new Map();
-    
-    const routes:Map<String, any> = new Map()
-    
-    fs.readdirSync(path.join(__dirname + "/routes/api/v1"))
-      .filter((f) => f.endsWith(".js") && !f.startsWith("_"))
-      .forEach((file) => {
-        const routeFile = require(path.join(
-          __dirname + "/routes/api/v1/" + file
-        ));
+    const commands: Map<string, any> = new Map();
+
+    const routes: Map<string, any> = new Map();
+
+    readdirSync(join(__dirname + '/routes/api/v1'))
+      .filter(
+        (f) => f.endsWith('.js') && !f.startsWith('_'),
+      )
+      .forEach(async (file) => {
+        const routeFile = await import(
+          join(__dirname + '/routes/api/v1/' + file)
+        );
 
         if (!routeFile.route) return;
 
-        if (routeFile.route.name && routeFile.route.method && routeFile.route.route) {
+        if (
+          routeFile.route.name &&
+          routeFile.route.method &&
+          routeFile.route.route
+        ) {
+          routes.set(
+            routeFile.route.name,
+            routeFile.route.route,
+          );
 
-          
-          routes.set(routeFile.route.name, routeFile.route.route)
-          
           logger.info(
-            `[${INSTANCE}] [API] Registering the route /api/v1/${routeFile.route.name} [POST]`
+            `[${INSTANCE}] [API] Registering the route /api/v1/${routeFile.route.name} [POST]`,
           );
         }
       });
@@ -66,6 +72,25 @@ export class api {
       
       
 
+    readdirSync(
+      join(
+        __dirname + '../../modules/interactions/commands',
+      ),
+    )
+      .filter(
+        (file) =>
+          !file.startsWith('_') && file.endsWith('.js'),
+      )
+      .forEach(async (f) => {
+        const interaction = await import(
+          '../modules/interactions/commands/' + f
+        );
+        commands.set(
+          interaction.command.id,
+          interaction.command.execute,
+        );
+      });
+
       // RequestHandler creates a separate execution context using domains, so that every
     // transaction/span/breadcrumb is attached to its own Hub instance
     this.app.use(Sentry.Handlers.requestHandler({
@@ -84,7 +109,9 @@ export class api {
     this.app.use(Sentry.Handlers.errorHandler());
 
     this.app.listen(PORT, () => {
-      logger.info(`[${INSTANCE}] [API] App is listening on port ${PORT}`);
+      logger.info(
+        `[${INSTANCE}] [API] App is listening on port ${PORT}`,
+      );
     });
   }
 }

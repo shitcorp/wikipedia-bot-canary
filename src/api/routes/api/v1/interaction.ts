@@ -1,7 +1,6 @@
-require('dotenv').config()
-
-import tweetnacl from "tweetnacl";
-import { logger } from '../../../../utils/logger';
+import tweetnacl from 'tweetnacl';
+import { logger } from '../../../../utils';
+import * as Sentry from '@sentry/node';
 
 export const route = {
     name: "interaction",
@@ -50,6 +49,7 @@ export const route = {
             } 
             
         }
-        
-    },
+      }
+    }
+  },
 };
