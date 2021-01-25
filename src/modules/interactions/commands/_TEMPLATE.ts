@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
+// ^ ^ ^ ^ ^  remove those 3 lines when copying the template file
+
 import wiki from '../../wiki/functions';
 import { logger } from '../../../utils';
 import methods from '../methods';
@@ -62,7 +67,5 @@ export const command = {
   id: 'ID',
   name: 'name',
   help: 'usefull commanddescription to show in help menu',
-  execute: async (
-    interaction: interaction,
-  ): Promise<void> => {},
+  execute: async (interaction: interaction): Promise<void> => {},
 };

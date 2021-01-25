@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import wiki from 'wikijs';
 import Constants from '../constants/Constants';
 import * as Sentry from '@sentry/node';
@@ -21,8 +22,13 @@ export default {
    * }
    *
    */
-  getSummary: async (argument: string, lang = 'en') => {
+  getSummary: async (
+    argument: string,
+    lang = 'en',
+  ): Promise<unknown> => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let apiUrl: any = Constants.apiUrl;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const headers: any = Constants.headers;
     const apiString: string = apiUrl[lang];
 
@@ -41,7 +47,9 @@ export default {
         // @ts-ignore
         headers,
       }).search(argument);
-      const wikiPage = await wiki({
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const wikiPage: any = await wiki({
         apiUrl: apiString,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -62,6 +70,7 @@ export default {
     return returnobject;
   },
   // method to get the full article
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   getFullArticle: async () => {},
   /**
    * @function getReferences
@@ -79,20 +88,30 @@ export default {
    * }
    *
    */
-  getReferences: async (argument: string) => {
+  getReferences: async (
+    argument: string,
+  ): Promise<unknown> => {
     const returnobject = {
       error: false,
       results: [Promise],
     };
-    const headers = Constants.headers;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const headers: any = Constants.headers;
 
     try {
-      const sourceSearch = await wiki({ headers }).search(
-        argument,
-      );
-      const wikiPageSources = await wiki({ headers }).page(
-        sourceSearch.results[0],
-      );
+      const sourceSearch = await wiki({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        headers,
+      }).search(argument);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const wikiPageSources: any = await wiki({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        headers,
+      }).page(sourceSearch.results[0]);
 
       const sourceResults = await Promise.all([
         wikiPageSources.raw.title,
@@ -120,11 +139,13 @@ export default {
    *      info: wikipediaPage.info
    * }
    */
-  getShortInformation: async (argument: string) => {
+  getShortInformation: async (
+    argument: string,
+  ): Promise<unknown> => {
     const returnobject = {
       error: false,
-      page: '',
-      info: '',
+      page: {},
+      info: {},
     };
 
     try {

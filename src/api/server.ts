@@ -8,16 +8,17 @@ import { expressLogger, logger } from '../utils';
 export class api {
   app: express.Application;
   port: number;
-  instance: any;
+  instance: string;
 
   // instance is our instance id
-  constructor(PORT: number, INSTANCE: any) {
+  constructor(PORT: number, INSTANCE: string) {
     this.app = express();
     this.port = PORT;
     this.instance = INSTANCE;
 
-    const commands: Map<string, any> = new Map();
+    const commands: Map<string, unknown> = new Map();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const routes: Map<string, any> = new Map();
 
     readdirSync(join(__dirname + '/routes/api/v1'))
@@ -56,9 +57,10 @@ export class api {
         (file) =>
           !file.startsWith('_') && file.endsWith('.js'),
       )
-      .forEach((f) => {
-        const interaction = require('../modules/interactions/commands/' +
-          f);
+      .forEach(async (f) => {
+        const interaction = await import(
+          `../modules/interactions/commands/${f}`
+        );
         if (
           interaction.command.id === 'ID' ||
           interaction.command.id === ''
@@ -72,6 +74,7 @@ export class api {
 
     this.app.use(
       bodyparser.json({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         verify: (req: any, res, buf) => {
           req.rawBody = buf;
         },
