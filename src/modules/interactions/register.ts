@@ -1,11 +1,11 @@
-(async () => {
-  (await import('dotenv')).config();
-})();
-
 import fs from 'fs';
 import path from 'path';
+import dotenv from 'dotenv';
 import prompts from 'prompts';
 import { DiscordInteractions } from 'slash-commands';
+
+// load our env variables
+dotenv.config();
 
 const config = {
   applicationId: process.env.APPLICATION_ID,
@@ -24,6 +24,7 @@ fs.readdirSync(path.join(__dirname + '/commands'))
     });
   });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const questions: any = [
   {
     type: 'multiselect',
@@ -47,8 +48,8 @@ const questions: any = [
 
     await interaction
       .createApplicationCommand(raw)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((data: any) => {
-        //console.log(data)
         if (
           data.message &&
           data.message.includes('401: Unauthorized')
