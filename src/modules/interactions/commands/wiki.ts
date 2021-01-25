@@ -109,17 +109,16 @@ export const command = {
       );
     } else {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const desc_long: any = await returnedObject
-        .results[3];
+      const desc_long: any = await returnedObject.wiki.text;
       const desc = desc_long.substr(0, 1169) + '.....';
 
       await methods.deleteOriginal(returned.data.token);
       await methods.embed.defaultWikiEmbed(
         returned.data.token,
         {
-          title: returnedObject.results[0],
-          url: returnedObject.results[1],
-          thumb: returnedObject.results[2],
+          title: returnedObject.wiki.title,
+          url: returnedObject.wiki.url,
+          thumb: returnedObject.wiki.image,
           desc,
         },
       );

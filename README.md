@@ -1,6 +1,6 @@
 <h1 align="center">🌍 Wikipedia Canary Bot (Beta) 🌎</h1>
 
-<h2 align="center"><a href="https://discordapp.com/oauth2/authorize?client_id=554751047030013953&scope=bot&permissions=3467328"> Add it to your server </a></h2>
+<h2 align="center"><a href="https://discord.com/oauth2/authorize?client_id=557923645532536852&scope=applications.commands"> Add it to your server </a></h2>
 
 
 <a href="https://discord.gg/yAUmDNb">

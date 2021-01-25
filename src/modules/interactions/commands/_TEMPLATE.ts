@@ -66,6 +66,6 @@ export const command = {
   // for the interaction handler
   id: 'ID',
   name: 'name',
-  help: 'usefull commanddescription to show in help menu',
+  help: 'useful commanddescription to show in help menu',
   execute: async (interaction: interaction): Promise<void> => {},
 };
