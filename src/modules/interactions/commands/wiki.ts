@@ -1,7 +1,7 @@
 import wiki from '../../wiki/functions';
 import { logger } from '../../../utils';
 import methods from '../methods';
-import { interaction } from '../../../models/interaction';
+import { interaction } from '../../../@types/interaction';
 
 export const raw = {
   name: 'wiki',
