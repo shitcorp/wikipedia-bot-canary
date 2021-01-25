@@ -27,7 +27,6 @@ export const command = {
   execute: async (
     interaction: interaction,
   ): Promise<void> => {
-    console.log(interaction.data?.options);
     if (!interaction.data) return;
     if (!interaction.data.options) return;
     if (interaction.data.options[0].value === '') return;
