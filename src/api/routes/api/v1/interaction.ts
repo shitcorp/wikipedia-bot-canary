@@ -35,21 +35,24 @@ export const route = {
     }
 
     if (isVerified) {
-      res.status(200);
+      res.status(200).send({ type: 1 });
 
       const interaction: interaction = req.body;
 
       if (!interaction.data) return;
 
       if (commands.has(interaction.data.id)) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const func: any = commands.get(interaction.data.id);
         try {
-          func(interaction);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const func: any = commands.get(
+            interaction.data.id,
+          );
+          await func.execute(interaction);
           logger.info(
             `[INTERACTION] Received interaction: '${interaction.data.name}'; by user: '${interaction.member.user.username}#${interaction.member.user.discriminator}';`,
           );
         } catch (e) {
+          console.error(e);
           logger.error(e);
         }
       }

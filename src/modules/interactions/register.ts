@@ -67,6 +67,22 @@ const questions: any = [
                   
                   _________________________________
                   `);
+        } else if (
+          data.message &&
+          data.message.includes('Invalid Form Body')
+        ) {
+          console.error(`
+                  _________________________________
+
+                  [503] Invalid Form Body
+
+                  Failed to register the command, check
+                  your command formatting and try again.
+                  
+                  _________________________________
+          `);
+        } else {
+          console.error(data);
         }
         if (data.id) {
           console.log(`
@@ -80,7 +96,7 @@ const questions: any = [
                   Desc:        ${data.description}
                   
                   _________________________________`);
-        }
+        } else console.error(data);
       })
       .catch(console.error);
   }

@@ -43,7 +43,7 @@ export class api {
           );
 
           logger.info(
-            `[${INSTANCE}] [API] Registering the route /api/v1/${routeFile.route.name} [POST]`,
+            `[${INSTANCE}] [API] Registering the route: /api/v1/${routeFile.route.name} [POST]`,
           );
         }
       });
@@ -55,12 +55,18 @@ export class api {
     )
       .filter(
         (file) =>
-          !file.startsWith('_') && file.endsWith('.js'),
+          !file.startsWith('_') &&
+          !file.endsWith('.js.map') &&
+          file.endsWith('.js'),
       )
       .forEach(async (f) => {
         const interaction = await import(
           `../modules/interactions/commands/${f}`
         );
+        // for some reason its still importing the
+        // source maps even tho I tried to filter it
+        if (interaction.default) return;
+
         if (
           interaction.command.id === 'ID' ||
           interaction.command.id === ''
@@ -69,6 +75,9 @@ export class api {
         commands.set(
           interaction.command.id,
           interaction.command,
+        );
+        logger.info(
+          `[${INSTANCE}] [CMD] Registering command: ${interaction.command.name}`,
         );
       });
 
@@ -93,25 +102,6 @@ export class api {
           commands,
         );
     });
-
-    readdirSync(
-      join(
-        __dirname + '../../modules/interactions/commands',
-      ),
-    )
-      .filter(
-        (file) =>
-          !file.startsWith('_') && file.endsWith('.js'),
-      )
-      .forEach(async (f) => {
-        const interaction = await import(
-          '../modules/interactions/commands/' + f
-        );
-        commands.set(
-          interaction.command.id,
-          interaction.command.execute,
-        );
-      });
 
     // RequestHandler creates a separate execution context using domains, so that every
     // transaction/span/breadcrumb is attached to its own Hub instance
