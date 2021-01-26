@@ -108,6 +108,7 @@ if (cluster.isMaster) {
     console.log('Worker ' + worker.id + ' is online.');
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   cluster.on('exit', function (worker, code, signal) {
     console.log('worker ' + worker.id + ' died.');
   });
@@ -144,7 +145,7 @@ if (cluster.isMaster) {
   });
 
   try {
-    new api(3420, cluster.worker.id);
+    new api(3420, cluster.worker.id.toString());
   } catch (error) {
     console.log(error);
     Sentry.captureException(error);
