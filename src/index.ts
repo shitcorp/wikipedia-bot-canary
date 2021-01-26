@@ -6,37 +6,12 @@ import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
-import { platform, version, release } from 'os';
+import { platform, version, release, cpus } from 'os';
 import { inspect } from 'util';
+import cluster from 'cluster';
 
 import { api } from './api/server';
 import { i18nextLogger, logger } from './utils';
-
-// init internationalization
-i18next
-  .use(Backend)
-  .use(i18nextLogger)
-  .init({
-    lng: 'en',
-    fallbackLng: 'en',
-    preload: ['en'],
-    ns: ['translation'],
-    defaultNS: 'translation',
-    backend: {
-      // path where resources get loaded from, or a function
-      // returning a path:
-      // function(lngs, namespaces) { return customPath; }
-      // the returned path will interpolate lng, ns if provided like giving a static path
-      loadPath: 'src/locales/{{lng}}/{{ns}}.json',
-
-      // path to post missing resources
-      addPath: 'src/locales/{{lng}}/{{ns}}.missing.json',
-    },
-    debug: false,
-  });
-
-// specify lang ex:
-// t('welcome', { lng: 'en' })
 
 // init sentry
 Sentry.init({
@@ -88,21 +63,6 @@ Sentry.setTag('os.name', version());
 Sentry.setTag('os', version() + ' ' + release());
 Sentry.setTag('node', process.version);
 
-const startServer = Sentry.startTransaction({
-  op: 'start api',
-  name: 'Started the api server',
-});
-
-try {
-  new api(3420, 'INSTANCE001');
-} catch (error) {
-  console.log(error);
-  Sentry.captureException(error);
-  logger.error(inspect(error));
-} finally {
-  startServer.finish();
-}
-
 // Capture unhandledRejections
 process.on('unhandledRejection', (error: Error) => {
   // Log
@@ -133,3 +93,63 @@ process.on('warning', (warning: Error) => {
   // Send to sentry
   Sentry.captureException(warning);
 });
+
+const numCPUs = cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`Master is running`);
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('online', function (worker) {
+    console.log('Worker ' + worker.id + ' is online.');
+  });
+
+  cluster.on('exit', function (worker, code, signal) {
+    console.log('worker ' + worker.id + ' died.');
+  });
+} else {
+  // init internationalization
+  i18next
+    .use(Backend)
+    .use(i18nextLogger)
+    .init({
+      lng: 'en',
+      fallbackLng: 'en',
+      preload: ['en'],
+      ns: ['translation'],
+      defaultNS: 'translation',
+      backend: {
+        // path where resources get loaded from, or a function
+        // returning a path:
+        // function(lngs, namespaces) { return customPath; }
+        // the returned path will interpolate lng, ns if provided like giving a static path
+        loadPath: 'src/locales/{{lng}}/{{ns}}.json',
+
+        // path to post missing resources
+        addPath: 'src/locales/{{lng}}/{{ns}}.missing.json',
+      },
+      debug: false,
+    });
+
+  // specify lang ex:
+  // t('welcome', { lng: 'en' })
+
+  const startServer = Sentry.startTransaction({
+    op: 'start api',
+    name: 'Started the api server',
+  });
+
+  try {
+    new api(3420, cluster.worker.id);
+  } catch (error) {
+    console.log(error);
+    Sentry.captureException(error);
+    logger.error(inspect(error));
+  } finally {
+    startServer.finish();
+  }
+}

@@ -115,6 +115,7 @@ export class api {
     // TracingHandler creates a trace for every incoming request
     this.app.use(Sentry.Handlers.tracingHandler());
 
+    // winston logger
     this.app.use(expressLogger);
     this.app.use(express.json());
 
