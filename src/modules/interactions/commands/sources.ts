@@ -3,6 +3,7 @@ import wiki from '../../wiki/functions';
 //import methods from '../methods';
 import { interaction } from '../../../@types/interaction';
 import returnobject from '../../../@types/returnobject';
+import methods from '../methods';
 
 export const raw = {
   name: 'sources',
@@ -32,12 +33,50 @@ export const command = {
     if (!interaction.data.options) return;
     if (interaction.data.options[0].value === '') return;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const returnedinteraction: any = await methods.reply(
+      interaction,
+      'LOADING, PLEASE WAIT ...',
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const searchTerm: any =
       interaction.data.options[0].value;
-    const returnedObject: returnobject = await wiki.getReferences(
+    const returnedObject: returnobject = await wiki.getWikiObject(
       searchTerm,
     );
-    console.log(returnedObject);
-    // TODO
+    //console.log(returnedObject.wiki?.refs);
+
+    let desc = '';
+    for (let i = 0; i < 34; i++) {
+      if (!returnedObject.wiki?.refs) return;
+      let link = returnedObject.wiki?.refs[i];
+      if (
+        returnedObject.wiki?.refs[i].startsWith(
+          'https://',
+        ) === true ||
+        returnedObject.wiki?.refs[i].startsWith(
+          'http://',
+        ) === true
+      ) {
+        // https://stackoverflow.com/questions/569137/how-to-get-domain-name-from-url
+        link = `[${link.replace(
+          /.+\/\/|www.|\..+/g,
+          '',
+        )}](${returnedObject.wiki?.refs[i]})`;
+      }
+      desc += ` >> ${link} <<\n`;
+    }
+    console.log(returnedinteraction, desc);
+    const title =
+      'References for ' + returnedObject.wiki?.title;
+    await methods.embed.defaultEmbed(
+      returnedinteraction.data.token,
+      {
+        title,
+        desc,
+      },
+    );
+    await methods.deleteOriginal(
+      returnedinteraction.data.token,
+    );
   },
 };

@@ -33,7 +33,7 @@ export const command = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const searchTerm: any =
       interaction.data.options[0].value;
-    const returnedObject: returnobject = await wiki.getShortInformation(
+    const returnedObject: returnobject = await wiki.getWikiObject(
       searchTerm,
     );
     if (!returnedObject.wiki) return;

@@ -1,21 +1,30 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import wiki from 'wikijs';
 import Constants from '../constants/Constants';
 import * as Sentry from '@sentry/node';
 import returnobject from '../../@types/returnobject';
+import { logger } from '../../utils';
 
 const returnobject: returnobject = { error: false };
 
 export default {
   /**
-   * Function that returns a returnobject with an error or the requested information
-   * @function getSummary
-   * @param {string} argument - Argument sent by the user (!wiki [argument])
-   * @param {string} lang - Language in which the result should be sent.
+   * Central function that returns a wikipediaobject with an
+   *  error or the requested information. The returned object
+   * has the following keys in the wiki property:
+   * - title,
+   * - url,
+   * - image,
+   * - text(summary),
+   * - refs(references/sources),
+   * - info,
+   * - page(the full wikipage object)
+   * @method getWikiObject
+   * @param {string} searchterm - Argument sent by the user (/wiki [searchterm])
+   * @param {string} lang - Language in which the results should be sent.
    * @returns {returnobject} returnobject
    */
-  getSummary: async (
-    argument: string,
+  getWikiObject: async (
+    searchterm: string,
     lang = 'en',
   ): Promise<returnobject> => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,7 +42,7 @@ export default {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         headers,
-      }).search(argument);
+      }).search(searchterm);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const wikiPage: any = await wiki({
@@ -48,82 +57,16 @@ export default {
         url: await wikiPage.raw.fullurl,
         image: await wikiPage.mainImage(),
         text: await wikiPage.summary(),
+        refs: await wikiPage.references(),
+        info: await wikiPage.fullInfo(),
+        page: await wikiPage,
       };
     } catch (e) {
+      logger.error(e);
       returnobject.error = true;
-      Sentry.captureException(e);
-    }
-
-    return returnobject;
-  },
-  // method to get the full article
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  getFullArticle: async () => {},
-  /**
-   * @function getReferences
-   * @param {string} argument - Keyword you want the references for
-   * @returns {returnobject} returnobject with requested information
-   *
-   */
-  getReferences: async (
-    argument: string,
-  ): Promise<returnobject> => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const headers: any = Constants.headers;
-
-    try {
-      const sourceSearch = await wiki({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        headers,
-      }).search(argument);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const wikiPageSources: any = await wiki({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        headers,
-      }).page(sourceSearch.results[0]);
-
-      returnobject.wiki = {
-        title: await wikiPageSources.raw.title,
-        url: await wikiPageSources.raw.fullurl,
-        image: await wikiPageSources.mainImage(),
-        refs: await wikiPageSources.references(),
-      };
-    } catch (e) {
-      returnobject.error = true;
-      Sentry.captureException(e);
-    }
-
-    return returnobject;
-  },
-  /**
-   * @function getShortInformation
-   * @param {string} argument - argument you want to search for and get information on
-   * @returns {returnobject} returnobject
-   */
-  getShortInformation: async (
-    argument: string,
-  ): Promise<returnobject> => {
-    try {
-      const data = await wiki().search(argument);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const page: any = await wiki().page(data.results[0]);
-      const title = await page.raw.title;
-      const url = await page.raw.fullurl;
-      const image = await page.mainImage();
-      const info = await page.fullInfo();
-
-      returnobject.wiki = {
-        title,
-        url,
-        image,
-        page,
-        info,
-      };
-    } catch (e) {
-      returnobject.error = true;
+      returnobject.errormsg =
+        'Something went wrong when trying to fetch the requested page. Most likely an error with wikijs. Check error logs for details; \nError:' +
+        e.toString().substr(0, 75);
       Sentry.captureException(e);
     }
 

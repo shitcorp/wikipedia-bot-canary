@@ -35,7 +35,7 @@ export const route = {
     }
 
     if (isVerified) {
-      res.status(200).send({ type: 1 });
+      res.status(200);
 
       const interaction: interaction = req.body;
 
@@ -47,7 +47,7 @@ export const route = {
           const func: any = commands.get(
             interaction.data.id,
           );
-          await func.execute(interaction);
+          func.execute(interaction);
           logger.info(
             `[INTERACTION] Received interaction: '${interaction.data.name}'; by user: '${interaction.member.user.username}#${interaction.member.user.discriminator}';`,
           );
