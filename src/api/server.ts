@@ -8,10 +8,10 @@ import { expressLogger, logger } from '../utils';
 export class api {
   app: express.Application;
   port: number;
-  instance: string;
+  instance: number;
 
   // instance is our instance id
-  constructor(PORT: number, INSTANCE: string) {
+  constructor(PORT: number, INSTANCE: number) {
     this.app = express();
     this.port = PORT;
     this.instance = INSTANCE;
