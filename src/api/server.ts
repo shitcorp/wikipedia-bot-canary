@@ -1,23 +1,24 @@
+import bodyparser from 'body-parser';
 import express from 'express';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import * as Sentry from '@sentry/node';
-
 import { expressLogger, logger } from '../utils';
 
 export class api {
   app: express.Application;
   port: number;
-  instance: any;
+  instance: string;
 
   // instance is our instance id
-  constructor(PORT: number, INSTANCE: any) {
+  constructor(PORT: number, INSTANCE: string) {
     this.app = express();
     this.port = PORT;
     this.instance = INSTANCE;
 
-    const commands: Map<string, any> = new Map();
+    const commands: Map<string, unknown> = new Map();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const routes: Map<string, any> = new Map();
 
     readdirSync(join(__dirname + '/routes/api/v1'))
@@ -42,7 +43,7 @@ export class api {
           );
 
           logger.info(
-            `[${INSTANCE}] [API] Registering the route /api/v1/${routeFile.route.name} [POST]`,
+            `[${INSTANCE}] [API] Registering the route: /api/v1/${routeFile.route.name} [POST]`,
           );
         }
       });
@@ -54,35 +55,35 @@ export class api {
     )
       .filter(
         (file) =>
-          !file.startsWith('_') && file.endsWith('.js'),
+          !file.startsWith('_') &&
+          !file.endsWith('.js.map') &&
+          file.endsWith('.js'),
       )
       .forEach(async (f) => {
         const interaction = await import(
-          '../modules/interactions/commands/' + f
+          `../modules/interactions/commands/${f}`
         );
+        // for some reason its still importing the
+        // source maps even tho I tried to filter it
+        if (interaction.default) return;
+
+        if (
+          interaction.command.id === 'ID' ||
+          interaction.command.id === ''
+        )
+          return;
         commands.set(
           interaction.command.id,
-          interaction.command.execute,
+          interaction.command,
+        );
+        logger.info(
+          `[${INSTANCE}] [CMD] Registering command: ${interaction.command.name}`,
         );
       });
 
-    // RequestHandler creates a separate execution context using domains, so that every
-    // transaction/span/breadcrumb is attached to its own Hub instance
     this.app.use(
-      Sentry.Handlers.requestHandler({
-        user: false,
-        // timeout for fatal route errors to be delivered
-        flushTimeout: 5000,
-      }),
-    );
-    // // TracingHandler creates a trace for every incoming request
-    this.app.use(Sentry.Handlers.tracingHandler());
-
-    // winston logger
-    this.app.use(expressLogger);
-
-    this.app.use(
-      express.json({
+      bodyparser.json({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         verify: (req: any, res, buf) => {
           req.rawBody = buf;
         },
@@ -102,7 +103,23 @@ export class api {
         );
     });
 
-    // send all errors to sentry, must be last
+    // RequestHandler creates a separate execution context using domains, so that every
+    // transaction/span/breadcrumb is attached to its own Hub instance
+    this.app.use(
+      Sentry.Handlers.requestHandler({
+        user: false,
+        // timeout for fatal route errors to be delivered
+        flushTimeout: 5000,
+      }),
+    );
+    // TracingHandler creates a trace for every incoming request
+    this.app.use(Sentry.Handlers.tracingHandler());
+
+    // winston logger
+    this.app.use(expressLogger);
+    this.app.use(express.json());
+
+    // send all errors to sentry
     this.app.use(Sentry.Handlers.errorHandler());
 
     this.app.listen(PORT, () => {
