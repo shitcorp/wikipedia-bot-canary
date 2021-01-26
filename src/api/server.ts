@@ -1,9 +1,10 @@
-import bodyparser from 'body-parser';
 import express from 'express';
+import helmet from 'helmet';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import * as Sentry from '@sentry/node';
 import { expressLogger, logger } from '../utils';
+import { Command } from '../@types/cmd';
 
 export class api {
   app: express.Application;
@@ -16,7 +17,7 @@ export class api {
     this.port = PORT;
     this.instance = INSTANCE;
 
-    const commands: Map<string, unknown> = new Map();
+    const commands: Map<string, Command> = new Map();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const routes: Map<string, any> = new Map();
@@ -81,8 +82,24 @@ export class api {
         );
       });
 
+    // use helmet
+    this.app.use(helmet());
+    // RequestHandler creates a separate execution context using domains, so that every
+    // transaction/span/breadcrumb is attached to its own Hub instance
     this.app.use(
-      bodyparser.json({
+      Sentry.Handlers.requestHandler({
+        user: false,
+        // timeout for fatal route errors to be delivered
+        flushTimeout: 5000,
+      }),
+    );
+    // TracingHandler creates a trace for every incoming request
+    this.app.use(Sentry.Handlers.tracingHandler());
+
+    // winston logger
+    this.app.use(expressLogger);
+    this.app.use(
+      express.json({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         verify: (req: any, res, buf) => {
           req.rawBody = buf;
@@ -103,23 +120,11 @@ export class api {
         );
     });
 
-    // RequestHandler creates a separate execution context using domains, so that every
-    // transaction/span/breadcrumb is attached to its own Hub instance
-    this.app.use(
-      Sentry.Handlers.requestHandler({
-        user: false,
-        // timeout for fatal route errors to be delivered
-        flushTimeout: 5000,
-      }),
-    );
-    // TracingHandler creates a trace for every incoming request
-    this.app.use(Sentry.Handlers.tracingHandler());
+    this.app.get('/healthy', (req, res) => {
+      res.send('Server is healthy');
+    });
 
-    // winston logger
-    this.app.use(expressLogger);
-    this.app.use(express.json());
-
-    // send all errors to sentry
+    // send all errors to sentrys
     this.app.use(Sentry.Handlers.errorHandler());
 
     this.app.listen(PORT, () => {

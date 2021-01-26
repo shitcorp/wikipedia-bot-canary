@@ -2,8 +2,9 @@ import { interaction } from '../../../@types/interaction';
 import returnobject from '../../../@types/returnobject';
 import wiki from '../../wiki/functions';
 import methods from '../methods';
+import { Command, CommandRaw } from '../../../@types/cmd';
 
-export const raw = {
+export const raw: CommandRaw = {
   name: 'wiki-info',
   description:
     'Returns information about a specified wikipedia article',
@@ -18,12 +19,12 @@ export const raw = {
   ],
 };
 
-export const command = {
+export const command: Command = {
   // the id that discord returned us, we will need this
   // for the interaction handler
   id: '803241756488368138',
   name: 'wiki-info',
-  help: 'usefull commanddescription to show in help menu',
+  help: 'useful command description to show in help menu',
   execute: async (
     interaction: interaction,
   ): Promise<void> => {

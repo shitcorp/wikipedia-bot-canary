@@ -1,10 +1,11 @@
 import wiki from '../../wiki/functions';
-import { logger } from '../../../utils';
+// import { logger } from '../../../utils';
 import methods from '../methods';
 import { interaction } from '../../../@types/interaction';
 import returnobject from '../../../@types/returnobject';
+import { Command, CommandRaw } from '../../../@types/cmd';
 
-export const raw = {
+export const raw: CommandRaw = {
   name: 'wiki',
   description: 'Returns the summary of a wikipedia article',
   options: [
@@ -57,12 +58,12 @@ export const raw = {
   ],
 };
 
-export const command = {
+export const command: Command = {
   // the id that discord returned us, we will need this
   // for the interaction handler
   id: '802662348154339328',
   name: 'wiki',
-  help: `Use thecommand as follows:
+  help: `Use the command as follows:
 
         [TODO] (<- if you see this and you are not a developer, plese let the developers know they forgot something)
     `,
@@ -102,7 +103,7 @@ export const command = {
       searchLang,
     );
 
-    if (returnedObject.error === true) {
+    if (returnedObject.error) {
       let errormsg =
         'Something went wrong .... :(  maybe try another search term and try again... \n';
       if (returnedObject.errormsg)

@@ -15,7 +15,7 @@ import { i18nextLogger, logger } from './utils';
 
 // init sentry
 Sentry.init({
-  dsn: '',
+  dsn: process.env.SENTRY_DSN,
   release: `wikipedia-bot-canary@${process.env.npm_package_version}`,
   environment: process.env.NODE_ENV || 'dev',
   maxBreadcrumbs: 100,
@@ -95,21 +95,22 @@ process.on('warning', (warning: Error) => {
 });
 
 const numCPUs = cpus().length;
+// const numCPUs = 1;
 
 if (cluster.isMaster) {
-  console.log(`Master is running`);
-
   // Fork workers.
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
 
-  cluster.on('online', function (worker) {
-    console.log('Worker ' + worker.id + ' is online.');
+  cluster.on('online', (worker) => {
+    logger.info(`Worker ${worker.id} is online`);
   });
 
-  cluster.on('exit', function (worker, code, signal) {
-    console.log('worker ' + worker.id + ' died.');
+  cluster.on('exit', (worker, code, signal) => {
+    logger.info(
+      `Worker ${worker.id} died; code: ${code}; signal: ${signal}`,
+    );
   });
 } else {
   // init internationalization

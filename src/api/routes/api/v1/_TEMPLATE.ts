@@ -1,12 +1,16 @@
-import { Request, Response } from 'express';
+/* eslint @typescript-eslint/no-unused-vars: 0 */
 
-export const route = {
+import { Request, Response } from 'express';
+import { Command } from '../../../../@types/cmd';
+import { APIRoute } from '../../../../@types/api';
+
+export const route: APIRoute = {
   name: 'name',
-  method: 'Method',
+  method: 'ALL',
   route: async (
-    req: Request,
-    res: Response,
-    commands: Map<string, any>,
+    req,
+    res,
+    commands,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-  ): Promise<void> => {},
+  ) => {},
 };
