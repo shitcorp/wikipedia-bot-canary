@@ -45,8 +45,15 @@ export const expressLogger = (
   req: Request,
   res: Response,
   done: NextFunction,
-) => {
-  logger.info(`${req.method} ${req.url} ${req.statusCode}`);
+): void => {
+  if (req.url !== '/healthy') {
+    logger.info(
+      `${req.method} ${req.url} ${req.statusCode}`,
+    );
+  }
+
+  // done with middleware
+  done();
 };
 
 export const i18nextLogger: LoggerModule = {

@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "start": "node ./dist/index.js",
     "prebuild": "yarn lint",
     "build": "tsc",
     "build:dev": "concurrently \"tsc --watch\" \"nodemon ./dist/index.js\"",
     "preregister": "yarn build",
     "register": "node ./dist/modules/interactions/register.js",
-    "lint": "eslint src/**/*.{ts,tsx} --quiet --fix",
+    "lint": "eslint **/**/*.{ts,tsx,cjs}",
+    "lint:fix": "eslint **/**/*.{ts,tsx,cjs} --quiet --fix",
     "commit": "cz"
   },
   "keywords": [],
@@ -40,6 +41,7 @@
     "centra": "^2.4.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "helmet": "^4.4.1",
     "i18next": "^19.8.4",
     "i18next-fs-backend": "^1.0.8",
     "morgan": "^1.10.0",
@@ -52,6 +54,8 @@
     "winston-daily-rotate-file": "^4.5.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@types/centra": "^2.2.0",
     "@types/express": "^4.17.11",
     "@types/i18next-fs-backend": "^1.0.0",
@@ -65,6 +69,7 @@
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^4.3.8",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"

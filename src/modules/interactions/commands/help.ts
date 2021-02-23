@@ -1,7 +1,8 @@
 import methods from '../methods';
 import { interaction } from '../../../@types/interaction';
+import { Command, CommandRaw } from '../../../@types/cmd';
 
-export const raw = {
+export const raw: CommandRaw = {
   name: 'help',
   description: 'Tells you how to use the bot',
   options: [
@@ -56,7 +57,7 @@ export const raw = {
   ],
 };
 
-export const command = {
+export const command: Command = {
   // the id that discord returned us, we will need this
   // for the interaction handler
   id: '802899683835117568',
@@ -75,12 +76,14 @@ export const command = {
       // display help for specific command here
       const commandname = interaction.data.options[0].value;
       // eslint-disable-next-line prettier/prettier
-      const { command } = await import('../commands/' + commandname +'.js'); 
+      const { command } = await import(
+        '../commands/' + commandname + '.js'
+      );
       if (!command.help || command.help === '') {
         methods.embed.defaultErrorEmbed(
           returned.data.token,
           `There seems to be no documentation for the command
-        
+
           __**[${commandname}]**__`,
         );
       } else {
@@ -101,8 +104,8 @@ export const command = {
           title: 'Help',
           desc: `
         __**Getring started:**__
-        Get started by typing /wiki <keyword> <language>¹ 
-        
+        Get started by typing /wiki <keyword> <language>¹
+
         ¹optional
         __**Commands**__
         [Click here](https://www.notion.so/wikipediabot/Commands-37fa263b9af14332baf70197e4f33e3f) to see all commands.

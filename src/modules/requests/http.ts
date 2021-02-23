@@ -9,7 +9,7 @@ const headers = {
   'X-Auth-Token': '',
 };
 
-const setToken = (authToken: string) => {
+const setToken = (authToken: string): void => {
   headers['X-Auth-Token'] = authToken;
 };
 
@@ -52,6 +52,8 @@ const req = async (
     );
     return await req(route, method, body);
   }
+
+  return;
 };
 
 const get = async (route: string): Promise<void> =>

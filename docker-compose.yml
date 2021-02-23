@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  api:
+    build: ./
+    container_name: wiki_api
+    restart: unless-stopped
+    ports:
+      - 3420:3420
+    env_file:
+      - .env
+    healthcheck:
+      test:
+        [ 'CMD-SHELL', 'wget -qO- localhost:3420/healthy' ]
+      interval: 30s
+      timeout: 5s

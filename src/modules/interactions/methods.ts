@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import c from 'centra';
 
-import { logger } from './../../utils/logger';
+import { logger } from '../../utils';
 import Constants from '../constants/Constants';
 
 import * as Sentry from '@sentry/node';

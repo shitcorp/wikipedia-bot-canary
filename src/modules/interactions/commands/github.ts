@@ -1,18 +1,19 @@
 import methods from '../methods';
 import { interaction } from '../../../@types/interaction';
+import { Command, CommandRaw } from '../../../@types/cmd';
 
-export const raw = {
+export const raw: CommandRaw = {
   name: 'github',
   description:
     'Returns the link to the github repository of this project.',
 };
 
-export const command = {
+export const command: Command = {
   // the id that discord returned us, we will need this
   // for the interaction handler
   id: '803360609172586546',
   name: 'github',
-  help: 'useful commanddescription to show in help menu',
+  help: 'useful command description to show in help menu',
   execute: async (
     interaction: interaction,
   ): Promise<void> => {
