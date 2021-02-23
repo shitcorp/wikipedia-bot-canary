@@ -1,9 +1,11 @@
-import { interaction } from '../../../../@types/interaction';
+// import { interaction } from '../../../../@types/interaction';
 import tweetnacl from 'tweetnacl';
 import { logger } from '../../../../utils';
 import * as Sentry from '@sentry/node';
 import { Command } from '../../../../@types/cmd';
 import { APIRoute } from '../../../../@types/api';
+import Interaction from '../../../../modules/interactions/Interaction';
+// import methods from '../../../../modules/interactions/methods';
 
 export const route: APIRoute = {
   name: 'interaction',
@@ -34,10 +36,13 @@ export const route: APIRoute = {
     }
 
     if (isVerified) {
-      res.status(200);
-
-      const interaction: interaction = req.body;
-
+      if (req.body.type === 1) {
+        res.status(200).send(JSON.stringify({ type: 1 }));
+      }
+      const interaction: Interaction = new Interaction(
+        req.body,
+      );
+      console.log(interaction);
       if (!interaction.data) return;
 
       if (commands.has(interaction.data.id)) {

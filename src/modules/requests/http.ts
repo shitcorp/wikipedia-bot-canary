@@ -17,6 +17,7 @@ const req = async (
   route: string,
   method: string,
   body: unknown,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> => {
   const fetch = request(route, method);
   fetch.reqHeaders = headers;

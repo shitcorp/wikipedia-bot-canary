@@ -1,10 +1,10 @@
 import { Snowflake } from 'slash-commands';
 
-interface InteractionType {
+export interface InteractionType {
   InteractionType: number;
 }
 
-interface GuildMember {
+export interface GuildMember {
   user: {
     username: string;
     public_flags: string;
@@ -23,13 +23,13 @@ interface GuildMember {
   deaf: boolean;
 }
 
-interface ApplicationCommandInteractionDataOption {
+export interface ApplicationCommandInteractionDataOption {
   name: string;
   value?: unknown;
   options?: Record<string, unknown>;
 }
 
-interface ApplicationCommandInteractionData {
+export interface ApplicationCommandInteractionData {
   id: Snowflake;
   name: string;
   options?: ApplicationCommandInteractionDataOption[];

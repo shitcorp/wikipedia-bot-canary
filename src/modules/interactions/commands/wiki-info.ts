@@ -40,14 +40,21 @@ export const command: Command = {
     if (!returnedObject.wiki) return;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const generalInfo: any = returnedObject.wiki.info;
+    let desc = '';
+    for (const key in generalInfo.general) {
+      console.log(key, generalInfo.general[key]);
+      desc += `**${key}** : ${generalInfo.general[key]} \n`;
+    }
     await methods.embed.defaultWikiEmbed(
       interaction.token,
       {
         title: generalInfo.general.name,
-        desc: `
-        __**Name:**__     ${generalInfo.general.name}
-        __**Genus:**__    ${generalInfo.general.genus}
-        __**Species:**__  ${generalInfo.general.species}`,
+        thumb: returnedObject.wiki.image,
+        desc,
+        // `
+        // __**Name:**__     ${generalInfo.general.name}
+        // __**Genus:**__    ${generalInfo.general.genus}
+        // __**Species:**__  ${generalInfo.general.species}`,
       },
     );
   },

@@ -9,7 +9,9 @@ import { interaction } from '../../@types/interaction';
 import { Snowflake } from 'slash-commands';
 
 // load our process vars
-dotenv.config();
+(async function load() {
+  dotenv.config();
+})();
 
 const appIdRaw: string = process.env.APPLICATION_ID;
 const appId: string = appIdRaw.toString();
@@ -122,6 +124,7 @@ export default {
       return await c(endpoint, 'POST')
         .body(
           {
+            type: 4,
             embeds: [
               {
                 color,

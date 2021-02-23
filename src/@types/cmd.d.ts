@@ -1,10 +1,10 @@
-import { interaction } from './interaction';
+import { Interaction } from '../modules/interactions/Interaction';
 
 interface Command {
   id: string;
   name: string;
   help: string;
-  execute: (interaction: interaction) => Promise<void>;
+  execute: (interaction: Interaction) => Promise<void>;
 }
 
 interface CommandRaw {
