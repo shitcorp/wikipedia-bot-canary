@@ -1,6 +1,5 @@
 import { logger } from '../../utils';
 import request from 'centra';
-import * as Sentry from '@sentry/node';
 
 const headers = {
   'User-agent':
@@ -26,11 +25,11 @@ const req = async (
   if (res.statusCode === undefined) {
     logger.error('Wiki request status code is undefined');
 
-    Sentry.addBreadcrumb({
-      category: 'request',
-      message: 'Wiki request status code is undefined',
-      level: Sentry.Severity.Error,
-    });
+    // Sentry.addBreadcrumb({
+    //   category: 'request',
+    //   message: 'Wiki request status code is undefined',
+    //   level: Sentry.Severity.Error,
+    // });
 
     // return internal server error
     return { status: 500 };

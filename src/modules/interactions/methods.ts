@@ -4,7 +4,6 @@ import c from 'centra';
 import { logger } from '../../utils';
 import Constants from '../constants/Constants';
 
-import * as Sentry from '@sentry/node';
 import { interaction } from '../../@types/interaction';
 import { Snowflake } from 'slash-commands';
 
@@ -81,7 +80,6 @@ export default {
     } catch (e) {
       returnobject.error = true;
       logger.error(e);
-      Sentry.captureException(e);
       return returnobject;
     }
   },

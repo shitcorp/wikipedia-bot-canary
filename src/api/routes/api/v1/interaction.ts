@@ -1,7 +1,6 @@
 // import { interaction } from '../../../../@types/interaction';
 import tweetnacl from 'tweetnacl';
 import { logger } from '../../../../utils';
-import * as Sentry from '@sentry/node';
 import { Command } from '../../../../@types/cmd';
 import { APIRoute } from '../../../../@types/api';
 import Interaction from '../../../../modules/interactions/Interaction';
@@ -46,27 +45,23 @@ export const route: APIRoute = {
       if (!interaction.data) return;
 
       if (commands.has(interaction.data.id)) {
-        Sentry.setUser({
-          username: `${interaction.member.user.username}#${interaction.member.user.discriminator}`,
-          id: interaction.member.user.id,
-        });
-
-        const commandTrans = Sentry.startTransaction({
-          op: 'cmd run',
-          name: 'Ran command',
-        });
-
+        // TODO FIXME move this to apm
+        // Sentry.setUser({
+        //   username: `${interaction.member.user.username}#${interaction.member.user.discriminator}`,
+        //   id: interaction.member.user.id,
+        // });
         try {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const cmd: Command = <Command>(
             commands.get(interaction.data.id)
           );
 
-          Sentry.addBreadcrumb({
-            category: 'cmd',
-            message: 'Ran the command ' + cmd.name,
-            level: Sentry.Severity.Info,
-          });
+          // TODO FIXME move this to apm
+          // Sentry.addBreadcrumb({
+          //   category: 'cmd',
+          //   message: 'Ran the command ' + cmd.name,
+          //   level: Sentry.Severity.Info,
+          // });
 
           // run cmd
           await cmd.execute(interaction);
@@ -75,10 +70,7 @@ export const route: APIRoute = {
             `[INTERACTION] Received interaction: '${interaction.data.name}'; by user: '${interaction.member.user.username}#${interaction.member.user.discriminator}';`,
           );
         } catch (e) {
-          Sentry.captureException(e);
           logger.error(e);
-        } finally {
-          commandTrans.finish();
         }
       }
     }

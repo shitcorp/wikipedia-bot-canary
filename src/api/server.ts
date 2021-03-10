@@ -2,7 +2,6 @@ import express from 'express';
 import helmet from 'helmet';
 import { readdirSync } from 'fs';
 import { join } from 'path';
-import * as Sentry from '@sentry/node';
 import { expressLogger, logger } from '../utils';
 import { Command } from '../@types/cmd';
 
@@ -86,15 +85,15 @@ export class api {
     this.app.use(helmet());
     // RequestHandler creates a separate execution context using domains, so that every
     // transaction/span/breadcrumb is attached to its own Hub instance
-    this.app.use(
-      Sentry.Handlers.requestHandler({
-        user: false,
-        // timeout for fatal route errors to be delivered
-        flushTimeout: 5000,
-      }),
-    );
-    // TracingHandler creates a trace for every incoming request
-    this.app.use(Sentry.Handlers.tracingHandler());
+    // this.app.use(
+    //   Sentry.Handlers.requestHandler({
+    //     user: false,
+    //     // timeout for fatal route errors to be delivered
+    //     flushTimeout: 5000,
+    //   }),
+    // );
+    // // TracingHandler creates a trace for every incoming request
+    // this.app.use(Sentry.Handlers.tracingHandler());
 
     // winston logger
     this.app.use(expressLogger);
@@ -108,10 +107,10 @@ export class api {
     );
 
     this.app.post('/api/:version/:endpoint', (req, res) => {
-      const apiVersionn = req.params.version;
+      const apiVersion = req.params.version;
       if (
         routes.has(req.params.endpoint) &&
-        apiVersionn === 'v1'
+        apiVersion === 'v1'
       )
         return routes.get(req.params.endpoint)(
           req,
@@ -125,7 +124,7 @@ export class api {
     });
 
     // send all errors to sentrys
-    this.app.use(Sentry.Handlers.errorHandler());
+    // this.app.use(Sentry.Handlers.errorHandler());
 
     this.app.listen(PORT, () => {
       logger.info(

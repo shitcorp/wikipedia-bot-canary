@@ -1,6 +1,5 @@
 import wiki from 'wikijs';
 import Constants from '../constants/Constants';
-import * as Sentry from '@sentry/node';
 import returnobject from '../../@types/returnobject';
 import { logger } from '../../utils';
 
@@ -67,7 +66,6 @@ export default {
       returnobject.errormsg =
         'Something went wrong when trying to fetch the requested page. Most likely an error with wikijs. Check error logs for details; \nError:' +
         e.toString().substr(0, 75);
-      Sentry.captureException(e);
     }
 
     return returnobject;
