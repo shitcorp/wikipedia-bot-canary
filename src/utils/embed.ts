@@ -1,4 +1,4 @@
-import { EmbedOptions, EmbedField } from '../@types/embeds';
+import { EmbedOptions, EmbedField } from '../../@types/embeds';
 
 // interface EmbedObject {
 //   title?: string;
@@ -18,7 +18,7 @@ import { EmbedOptions, EmbedField } from '../@types/embeds';
 /**
  * Creates an Embed
  */
-export class Embed {
+export default class Embed {
   private embed: EmbedOptions = {};
 
   /**
