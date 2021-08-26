@@ -10,6 +10,7 @@
     "lint:fix": "npx eslint --ext .ts ./src --fix"
   },
   "dependencies": {
+    "@fluent/bundle": "^0.16.1",
     "cat-loggr": "^1.1.0",
     "dotenv": "^8.2.0",
     "fastify": "^3.9.2",
