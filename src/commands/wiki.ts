@@ -1,8 +1,6 @@
 import { SlashCommand, CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
 import wiki from 'wikijs';
-import CatLoggr from 'cat-loggr/ts';
-
-const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
+import { logger } from '../utils';
 
 export default class WikiCommand extends SlashCommand {
   constructor(creator: SlashCreator) {

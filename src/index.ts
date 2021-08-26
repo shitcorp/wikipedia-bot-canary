@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { SlashCreator, FastifyServer, GatewayServer } from 'slash-create';
 import path from 'path';
-import CatLoggr from 'cat-loggr/ts';
+import { logger } from './utils';
 
 // Discord js things
 import Discord from 'discord.js';
@@ -14,7 +14,6 @@ if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cw
 
 dotenv.config({ path: dotenvPath });
 
-const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
   publicKey: process.env.DISCORD_PUBLIC_KEY,
@@ -22,8 +21,8 @@ const creator = new SlashCreator({
   serverPort: 8020
 });
 
-creator.on('debug', (message) => logger.log(message));
-creator.on('warn', (message) => logger.warn(message));
+creator.on('debug', (message) => logger.info(message));
+creator.on('warn', (message) => logger.warn(message.toString()));
 creator.on('error', (error) => logger.error(error));
 creator.on('synced', () => logger.info('Commands synced!'));
 creator.on('commandRun', (command, _, ctx) =>
@@ -33,7 +32,7 @@ creator.on('commandRegister', (command) => logger.info(`Registered command ${com
 creator.on('commandError', (command, error) => logger.error(`Command ${command.commandName}:`, error));
 
 creator
-  // .withServer(new FastifyServer())
+  // .withServer(new FastifyServer({logger: true}))
   .withServer(new GatewayServer((handler) => client.ws.on('INTERACTION_CREATE', handler)))
   .registerCommandsIn(path.join(__dirname, 'commands'))
   .syncCommands();

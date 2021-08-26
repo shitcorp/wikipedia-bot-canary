@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@fluent/bundle": "^0.16.1",
-    "cat-loggr": "^1.1.0",
     "dotenv": "^8.2.0",
     "fastify": "^3.9.2",
     "ioredis": "^4.27.8",
+    "pino": "^7.0.0-rc.3",
     "slash-create": "^4.0.1",
     "wikijs": "^6.3.2"
   },
