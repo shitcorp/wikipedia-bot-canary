@@ -1,2 +1,2 @@
 export * from './embed';
-export * from './apiURLs';
+export * from './wiki';
