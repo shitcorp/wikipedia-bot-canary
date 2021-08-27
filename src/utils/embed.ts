@@ -158,6 +158,10 @@ export default class Embed {
     return this;
   }
 
+  /**
+   * Converts embed to JSON
+   * @returns embed
+   */
   public toJSON(): EmbedOptions {
     return this.embed;
   }
