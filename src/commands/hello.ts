@@ -1,6 +1,7 @@
-import { SlashCommand, CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
+import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
+import { Command } from '../structures';
 
-export default class HelloCommand extends SlashCommand {
+export default class HelloCommand extends Command {
   constructor(creator: SlashCreator) {
     super(creator, {
       name: 'hello',

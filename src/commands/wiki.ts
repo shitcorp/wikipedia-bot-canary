@@ -1,8 +1,8 @@
-import { SlashCommand, CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
+import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
 import wiki from 'wikijs';
-import { logger } from '../utils';
+import { Command } from '../structures/';
 
-export default class WikiCommand extends SlashCommand {
+export default class WikiCommand extends Command {
   constructor(creator: SlashCreator) {
     super(creator, {
       name: 'wiki',
@@ -42,10 +42,10 @@ export default class WikiCommand extends SlashCommand {
           summary = summary.slice(0, 2000);
         }
 
-        ctx.send(summary);
+        this.send(ctx, summary);
       })
       .catch(() => {
-        ctx.send('an error happened');
+        this.send(ctx, 'an error happened');
       });
 
     // return ctx.options.search ? `You like ${ctx.options.search}? Nice!` : `Hello, ${ctx.member.displayName}!`;
