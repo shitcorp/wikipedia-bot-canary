@@ -21,7 +21,7 @@ const creator = new SlashCreator({
   serverPort: 8020
 });
 
-creator.on('debug', (message) => logger.info(message));
+creator.on('debug', (message) => logger.debug(message));
 creator.on('warn', (message) => logger.warn(message.toString()));
 creator.on('error', (error) => logger.error(error));
 creator.on('synced', () => logger.info('Commands synced!'));
