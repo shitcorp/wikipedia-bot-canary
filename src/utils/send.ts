@@ -15,7 +15,7 @@ export default (ctx: CommandContext, content: string | Embed) => {
     ctx.send(trimLength(content, 2000), settings);
   } else {
     ctx.send({
-      ...content.toJSON(),
+      embeds: [content.toJSON()],
       ...settings
     });
   }
