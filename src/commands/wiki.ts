@@ -1,6 +1,7 @@
 import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
 import wiki from 'wikijs';
 import { Command } from '../structures/';
+import { trimLength } from '../utils';
 
 export default class WikiCommand extends Command {
   constructor(creator: SlashCreator) {
@@ -36,11 +37,7 @@ export default class WikiCommand extends Command {
     wiki()
       .page(ctx.options.search)
       .then(async (page) => {
-        let summary = await page.summary();
-
-        if (summary.length >= 2000) {
-          summary = summary.slice(0, 2000);
-        }
+        const summary = await page.summary();
 
         this.send(ctx, summary);
       })

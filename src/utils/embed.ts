@@ -1,4 +1,5 @@
 import { EmbedOptions, EmbedField } from '../../@types/embeds';
+import trimLength from './trimLength';
 
 // interface EmbedObject {
 //   title?: string;
@@ -14,6 +15,18 @@ import { EmbedOptions, EmbedField } from '../../@types/embeds';
 //   //  ^
 //   readonly createdAt?: Date;
 // }
+
+/**
+ * Max length of each item
+ *
+ * https://discord.com/developers/docs/resources/channel#embed-limits
+ */
+const titleLen = 256;
+const descriptionLen = 4096;
+const fieldNameLen = 256;
+const fieldValueLen = 1024;
+const footerTextLen = 2048;
+const authorNameLen = 256;
 
 /**
  * Creates an Embed
@@ -41,8 +54,8 @@ export default class Embed {
     else if (typeof value === 'boolean') value = value.toString();
 
     const field: EmbedField = {
-      name,
-      value,
+      name: trimLength(name, fieldNameLen),
+      value: trimLength(value, fieldValueLen),
       inline
     };
 
@@ -58,7 +71,7 @@ export default class Embed {
    * @param url
    */
   public setAuthor(name: string, iconURl = '', url = ''): this {
-    this.embed.author = { name };
+    this.embed.author = { name: trimLength(name, authorNameLen) };
 
     if (iconURl) {
       this.embed.author.icon_url = iconURl;
@@ -86,7 +99,7 @@ export default class Embed {
    * @param description
    */
   public setDescription(description: string): this {
-    this.embed.description = description;
+    this.embed.description = trimLength(description, descriptionLen);
 
     return this;
   }
@@ -97,7 +110,7 @@ export default class Embed {
    * @param iconURl
    */
   public setFooter(text: string, iconURl = ''): this {
-    this.embed.footer = { text };
+    this.embed.footer = { text: trimLength(text, footerTextLen) };
 
     if (iconURl) {
       this.embed.footer.icon_url = iconURl;
@@ -131,7 +144,7 @@ export default class Embed {
    * @param title
    */
   public setTitle(title: string): this {
-    this.embed.title = title;
+    this.embed.title = trimLength(title, titleLen);
 
     return this;
   }
