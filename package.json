@@ -9,7 +9,9 @@
     "pc": "pino-colada",
     "build": "npx tsc",
     "lint": "npx eslint --ext .ts ./src",
-    "lint:fix": "npx eslint --ext .ts ./src --fix"
+    "lint:fix": "npx eslint --ext .ts ./src --fix",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
   },
   "dependencies": {
     "@fluent/bundle": "^0.16.1",
@@ -26,6 +28,7 @@
     "@types/node": "^14.14.37",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "all-contributors-cli": "^6.20.0",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-prettier": "^3.3.0",
