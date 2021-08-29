@@ -1,6 +1,6 @@
-import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
+import { SlashCreator, CommandContext } from 'slash-create';
 import { Command } from '../structures/';
-import { Embed, getArticle } from '../utils';
+import { Embed } from '../utils';
 import { partners } from '../config';
 
 export default class WikiCommand extends Command {

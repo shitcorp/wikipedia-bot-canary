@@ -1,6 +1,6 @@
 import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
 import { Command } from '../structures/';
-import { Embed, getArticle } from '../utils';
+import { Embed } from '../utils';
 import wiki from 'wikijs';
 
 export default class WikiCommand extends Command {

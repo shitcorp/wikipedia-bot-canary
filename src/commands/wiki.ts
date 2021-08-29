@@ -1,4 +1,4 @@
-import { CommandOptionType, SlashCreator, CommandContext, SlashCommand } from 'slash-create';
+import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
 import { Command } from '../structures/';
 import { Embed, getArticle } from '../utils';
 
