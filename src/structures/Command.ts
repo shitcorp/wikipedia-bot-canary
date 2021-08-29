@@ -1,5 +1,5 @@
 import { SlashCommand, SlashCommandOptions, SlashCreator } from 'slash-create';
-import { logger } from '../utils';
+import { Embed, logger } from '../utils';
 
 export default class Command extends SlashCommand {
   public logger = logger;
@@ -12,5 +12,11 @@ export default class Command extends SlashCommand {
       description: opts.description,
       options: opts.options
     });
+  }
+  getHelpEmbed() {
+    return new Embed()
+      .setAuthor(`Wikipedia - ${this.commandName}`)
+      .setDescription(this.description)
+      .setColor('#00ff00');
   }
 }

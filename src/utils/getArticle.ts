@@ -3,26 +3,25 @@
 // if will fetch it from the api
 import cache from './cache';
 import wiki from 'wikijs';
-import Article from '../structures/Article';
-import { wikiConfig } from '../config/wiki';
+import { Article } from '../structures';
+import { wikiConfig } from '../config';
 
 export default async (searchterm: string, lang = 'en') => {
   const cachedArticle = await cache.get(searchterm);
-  console.log(cachedArticle);
   if (cachedArticle) {
-    console.log('cached:', JSON.parse(cachedArticle));
+    if (Date.now() - JSON.parse(cachedArticle).cached > 604800000) cache.del(searchterm);
     return new Article(JSON.parse(cachedArticle));
   }
   const wikiApi = wiki(wikiConfig(lang));
   const page = await wikiApi.find(searchterm);
+
   const article = new Article({
+    url: page.url(),
     summary: await page.summary(),
-    image: (await page.mainImage()) || null,
-    url: page.url()
+    image: (await page.mainImage()) || null
   });
   // article .cache gives the article the cached timestamp
   // and returns the article to json
-  console.log(article);
   cache.set(searchterm, article.cache(), 'ex', 604800);
   return article;
 };

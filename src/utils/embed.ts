@@ -1,4 +1,5 @@
 import { EmbedOptions, EmbedField } from '../../@types/embeds';
+import { wikipediaIcon } from '../config';
 import trimLength from './trimLength';
 
 // interface EmbedObject {
@@ -70,7 +71,7 @@ export default class Embed {
    * @param iconURl
    * @param url
    */
-  public setAuthor(name: string, iconURl = '', url = ''): this {
+  public setAuthor(name: string, iconURl = wikipediaIcon, url = ''): this {
     this.embed.author = { name: trimLength(name, authorNameLen) };
 
     if (iconURl) {

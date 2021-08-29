@@ -1,12 +1,13 @@
-import { CommandOptionType, SlashCreator, CommandContext, SlashCommand } from 'slash-create';
+import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
 import { Command } from '../structures/';
 import { Embed, getArticle } from '../utils';
+import wiki from 'wikijs';
 
 export default class WikiCommand extends Command {
   constructor(creator: SlashCreator) {
     super(creator, {
-      name: 'wiki',
-      description: 'The normal wiki command used for getting short summaries of something the user searched for.',
+      name: 'wiki-info',
+      description: 'Returns the general information about the search term.',
       options: [
         {
           type: CommandOptionType.STRING,
@@ -33,14 +34,14 @@ export default class WikiCommand extends Command {
   async run(ctx: CommandContext) {
     ctx.defer();
 
-    const article = await getArticle(ctx.options.search);
+    const article = await wiki().find(ctx.options.search);
     const wikiEmbed = new Embed()
       .setAuthor('Wikipedia Bot')
-      .setDescription(article.summary)
+      .setDescription(article.fullInfo().toString())
       .setColor('0099ff')
-      .setURL(article.url);
+      .setURL(article.url());
 
-    if (article.image) wikiEmbed.setThumbnail(article.image);
+    if (await article.mainImage()) wikiEmbed.setThumbnail(await article.mainImage());
 
     return {
       embeds: [wikiEmbed]
