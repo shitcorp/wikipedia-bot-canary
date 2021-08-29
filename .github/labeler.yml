@@ -1,0 +1,15 @@
+# Add 'code' to any changes within 'src' folder or any subfolders
+code: src/**/*
+
+# Add 'locales' to any file changes within 'locales' folder
+locales: locales/*
+
+# Add 'config' to any changes to config files
+config:
+  - .*
+  - .github/*
+
+# Add 'dependencies' to any changes to the dependencies
+dependencies:
+  - yarn.lock
+  - package.json
