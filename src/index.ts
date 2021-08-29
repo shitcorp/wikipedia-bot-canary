@@ -18,7 +18,12 @@ const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
   publicKey: process.env.DISCORD_PUBLIC_KEY,
   token: process.env.DISCORD_BOT_TOKEN,
-  serverPort: 8020
+  serverPort: 8020,
+  allowedMentions: {
+    everyone: false,
+    roles: false,
+    users: false
+  }
 });
 
 creator.on('debug', (message) => logger.debug(message));
