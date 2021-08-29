@@ -31,7 +31,7 @@ current "regular version" of the bot. This Beta version of the bot uses _slash c
 ## 🤔 What will be coming soon?
 
 You can check the whole progress and every new feature which is
-currently under planning and development on our new [**Notion Board**](https://www.notion.so/wikipediabot/227303c9d45646a4ac7ffdfdff0e254e?v=e4b95c24955c499fbc18eeb08b44ddea).
+currently under planning and development on our new [**Roadmap**](https://github.com/wikipedia-bot/wikipedia-bot-canary/projects/2).
 
 If you have some more ideas to improve the bot, please let me know on Discord or here on GitHub Issues.
 
