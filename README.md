@@ -1,7 +1,4 @@
 <h1 align="center">🌍 Wikipedia Canary Bot (Beta) 🌎</h1>
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <h3 align="center"><a href="https://discord.com/oauth2/authorize?client_id=557923645532536852&scope=applications.commands"> Add the bot to your server WARNING: THIS IS A BETA VERSION</a></h3>
 
@@ -15,6 +12,9 @@
 <img src="https://badges.fw-web.space/endpoint?url=https://wakapi.stlf.me/api/compat/shields/v1/meerbiene/interval:any/project:wikipedia-bot-canary&color=blue&label=Wikipedia%20Bot">
 <a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/LICENSE">
 <img alt="License: MIT" src="https://img.shields.io/github/license/wikipedia-bot/wikipedia-bot-canary" target="_blank" />
+</a>
+<a href="#contributors">
+<img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square" target="_blank" />
 </a>
 </p>
 
@@ -60,18 +60,6 @@ Here is a list of people already donated or sponsored:
 
 Thank you very much to every supporter who helped us to finance this, and many mores projects.
 
-## 👍 Contributors
-
-All contributors of the project will be listed down here:
-
-- Julian Yaman ([GitHub](https://github.com/julianYaman/)) ([Twitter](https://twitter.com/julianYaman)) **(creator)**
-- MeerBiene ([GitHub](https://github.com/MeerBiene)) **(Code Contributor, Issue Writer, Feature Proposer, Bug fixer)**
-- Giuliopime ([GitHub](https://github.com/Giuliopime) **(Code Contributor)**
-- Huskydog9988 ([GitHub](https://github.com/Huskydog9988)) **(Code Contributor, Bug fixer)**
-- Klemen Skerbiš ([GitHub](https://github.com/aha999)) **(Issue Writer, Feature Proposer)**
-- Artiom Neganov ([GitHub](https://github.com/OnkelTem)) **(Issue Writer, Feature Proposer)**
-- Jakey#5911 **(Feature Proposer)**
-
 ## 🤝 Contributing
 
 Any type of contribution is welcome. Even reporting bugs or suggesting new features
@@ -92,12 +80,6 @@ You can reach me out here:
 - **[Discord](https://discord.gg/yAUmDNb)**
   You want to report a bug? You can do that on Discord or here on GitHub.
 
-### 📎 Short links
-
-- [**License**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/LICENSE)
-- [**Contributing guidelines**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/docs/CONTRIBUTING.md)
-- [**Code of Conduct**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/docs/CODE_OF_CONDUCT.md)
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -107,7 +89,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/Huskydog9988"><img src="https://avatars.githubusercontent.com/u/39809509?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Husky</b></sub></a><br /><a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/issues?q=author%3AHuskydog9988" title="Bug reports">🐛</a> <a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/commits?author=Huskydog9988" title="Code">💻</a> <a href="#ideas-Huskydog9988" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-Huskydog9988" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/Huskydog9988"><img src="https://avatars.githubusercontent.com/u/39809509?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Husky</b></sub></a><br /><a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/issues?q=author%3AHuskydog9988" title="Bug reports">🐛</a> <a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/commits?author=Huskydog9988" title="Code">💻</a> <a href="#ideas-Huskydog9988" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-Huskydog9988" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://bio.link/julianyaman"><img src="https://avatars.githubusercontent.com/u/20521320?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Julian Yaman</b></sub></a><br /><a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/issues?q=author%3AjulianYaman" title="Bug reports">🐛</a> <a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/commits?author=julianYaman" title="Code">💻</a> <a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/commits?author=julianYaman" title="Documentation">📖</a> <a href="#maintenance-julianYaman" title="Maintenance">🚧</a> <a href="#question-julianYaman" title="Answering Questions">💬</a> <a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/pulls?q=is%3Apr+reviewed-by%3AjulianYaman" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/MeerBiene"><img src="https://avatars.githubusercontent.com/u/60227302?v=4?s=60" width="60px;" alt=""/><br /><sub><b>meerbiene</b></sub></a><br /><a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/commits?author=MeerBiene" title="Code">💻</a> <a href="#ideas-MeerBiene" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-MeerBiene" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://giuliopime.dev/"><img src="https://avatars.githubusercontent.com/u/60524738?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Giuliopime</b></sub></a><br /><a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/commits?author=Giuliopime" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/aha999"><img src="https://avatars.githubusercontent.com/u/50620416?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Klemen Skerbiš</b></sub></a><br /><a href="#ideas-aha999" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="http://neganov.ru/"><img src="https://avatars.githubusercontent.com/u/114060?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Artiom Neganov</b></sub></a><br /><a href="#ideas-OnkelTem" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
@@ -117,3 +104,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+### 📎 Short links
+
+- [**License**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/LICENSE)
+- [**Contributing guidelines**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/docs/CONTRIBUTING.md)
+- [**Code of Conduct**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/docs/CODE_OF_CONDUCT.md)
