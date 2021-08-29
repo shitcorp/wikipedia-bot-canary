@@ -1,4 +1,5 @@
 import { EmbedOptions, EmbedField } from '../../@types/embeds';
+import { wikipediaIcon } from '../config';
 import trimLength from './trimLength';
 
 // interface EmbedObject {
@@ -70,7 +71,7 @@ export default class Embed {
    * @param iconURl
    * @param url
    */
-  public setAuthor(name: string, iconURl = '', url = ''): this {
+  public setAuthor(name: string, iconURl = wikipediaIcon, url = ''): this {
     this.embed.author = { name: trimLength(name, authorNameLen) };
 
     if (iconURl) {
@@ -88,9 +89,13 @@ export default class Embed {
    * Sets the color of this embed.
    * @param color
    */
-  public setColor(color: number): this {
-    this.embed.color = color;
-
+  public setColor(color: number | string): this {
+    // if hex, convert to int
+    if (typeof color === 'string' && color.length === 6) {
+      this.embed.color = parseInt(color, 16);
+    } else if (typeof color === 'number') {
+      this.embed.color = color;
+    }
     return this;
   }
 
