@@ -1,7 +1,6 @@
 import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
-import wiki from 'wikijs';
 import { Command } from '../structures/';
-import { trimLength } from '../utils';
+import { Embed, getArticle } from '../utils';
 
 export default class WikiCommand extends Command {
   constructor(creator: SlashCreator) {
@@ -34,17 +33,17 @@ export default class WikiCommand extends Command {
   async run(ctx: CommandContext) {
     ctx.defer();
 
-    wiki()
-      .page(ctx.options.search)
-      .then(async (page) => {
-        const summary = await page.summary();
+    const article = await getArticle(ctx.options.search);
+    const wikiEmbed = new Embed()
+      .setAuthor('Wikipedia Bot')
+      .setDescription(article.summary)
+      .setColor('0099ff')
+      .setURL(article.url);
 
-        this.send(ctx, trimLength(summary, 2000));
-      })
-      .catch(() => {
-        this.send(ctx, 'an error happened');
-      });
+    if (article.image) wikiEmbed.setThumbnail(article.image);
 
-    // return ctx.options.search ? `You like ${ctx.options.search}? Nice!` : `Hello, ${ctx.member.displayName}!`;
+    return {
+      embeds: [wikiEmbed]
+    };
   }
 }

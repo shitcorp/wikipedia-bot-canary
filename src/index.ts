@@ -5,7 +5,7 @@ if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cw
 
 dotenv.config({ path: dotenvPath });
 import { SlashCreator, FastifyServer } from 'slash-create';
-import { logger, pinoOptions } from './utils';
+import { logger, pinoOptions, cache } from './utils';
 
 const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
@@ -13,7 +13,7 @@ const creator = new SlashCreator({
   token: process.env.DISCORD_BOT_TOKEN,
   serverPort: Number(process.env.PORT)
 });
-
+cache.del('cat');
 creator.on('debug', (message) => logger.debug(message));
 creator.on('warn', (message) => logger.warn(message.toString()));
 creator.on('error', (error) => logger.error(error));

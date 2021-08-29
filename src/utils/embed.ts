@@ -88,9 +88,13 @@ export default class Embed {
    * Sets the color of this embed.
    * @param color
    */
-  public setColor(color: number): this {
-    this.embed.color = color;
-
+  public setColor(color: number | string): this {
+    // if hex, convert to int
+    if (typeof color === 'string' && color.length === 6) {
+      this.embed.color = parseInt(color, 16);
+    } else if (typeof color === 'number') {
+      this.embed.color = color;
+    }
     return this;
   }
 
