@@ -39,7 +39,7 @@ export default class WikiCommand extends Command {
       .then(async (page) => {
         const summary = await page.summary();
 
-        this.send(ctx, summary);
+        this.send(ctx, trimLength(summary, 2000));
       })
       .catch(() => {
         this.send(ctx, 'an error happened');
