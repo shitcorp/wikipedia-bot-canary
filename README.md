@@ -1,4 +1,7 @@
 <h1 align="center">🌍 Wikipedia Canary Bot (Beta) 🌎</h1>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <h3 align="center"><a href="https://discord.com/oauth2/authorize?client_id=557923645532536852&scope=applications.commands"> Add the bot to your server WARNING: THIS IS A BETA VERSION</a></h3>
 
@@ -94,3 +97,23 @@ You can reach me out here:
 - [**License**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/LICENSE)
 - [**Contributing guidelines**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/docs/CONTRIBUTING.md)
 - [**Code of Conduct**](https://github.com/wikipedia-bot/wikipedia-bot-canary/blob/main/docs/CODE_OF_CONDUCT.md)
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/Huskydog9988"><img src="https://avatars.githubusercontent.com/u/39809509?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Husky</b></sub></a><br /><a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/issues?q=author%3AHuskydog9988" title="Bug reports">🐛</a> <a href="https://github.com/wikipedia-bot/wikipedia-bot-canary/commits?author=Huskydog9988" title="Code">💻</a> <a href="#ideas-Huskydog9988" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-Huskydog9988" title="Maintenance">🚧</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
