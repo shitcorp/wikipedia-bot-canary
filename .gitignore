@@ -12,3 +12,4 @@ logs/
 !.vscode/extensions.json
 .env
 dist/
+docker-compose/data

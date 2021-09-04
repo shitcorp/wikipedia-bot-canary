@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+      - '8080:8080'
+    volumes:
+      - ./data:/bitnami/zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=true

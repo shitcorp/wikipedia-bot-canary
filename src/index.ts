@@ -5,7 +5,7 @@ if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cw
 
 dotenv.config({ path: dotenvPath });
 import { SlashCreator, FastifyServer } from 'slash-create';
-import { logger, pinoOptions, cache } from './utils';
+import { logger, pinoOptions, cache, CService as ConfigService } from './utils';
 
 const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
@@ -35,3 +35,15 @@ creator
   .registerCommandsIn(path.join(__dirname, 'commands'))
   .syncCommands()
   .startServer();
+
+for (const signal of ['SIGINT', 'SIGTERM']) {
+  process.on(signal, () => {
+    logger.info(`Received ${signal}, shutting down...`);
+    process.exit(0);
+  });
+}
+
+(async function main() {
+  const c = await ConfigService.getConfig('dust');
+  console.log(typeof c, c[0], c[1].toString());
+})();
