@@ -2,10 +2,9 @@ import dotenv from 'dotenv';
 import path from 'path';
 let dotenvPath = path.join(process.cwd(), '.env');
 if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
-
 dotenv.config({ path: dotenvPath });
 import { SlashCreator, FastifyServer } from 'slash-create';
-import { logger, pinoOptions, cache, CService as ConfigService } from './utils';
+import { logger, pinoOptions, cache, CService as ConfigService, ZClient } from './utils';
 
 const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
@@ -38,12 +37,20 @@ creator
 
 for (const signal of ['SIGINT', 'SIGTERM']) {
   process.on(signal, () => {
+    ZClient.getClient().close();
     logger.info(`Received ${signal}, shutting down...`);
     process.exit(0);
   });
 }
 
 (async function main() {
-  const c = await ConfigService.getConfig('dust');
-  console.log(typeof c, c[0], c[1].toString());
+  const c = await ConfigService.getConfig('the');
+  console.log(c);
+  const testConfig = {
+    version: 1,
+    config: {
+      lang: 'en'
+    }
+  };
+  const d = await ConfigService.setConfig('the', JSON.stringify(testConfig));
 })();

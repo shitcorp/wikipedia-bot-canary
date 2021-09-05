@@ -1,5 +1,5 @@
 import zookeeper from 'zookeeper';
-import { logger } from '../utils';
+import { logger, trimLength } from '../utils';
 
 export default class Zookeeper {
   private client: zookeeper;
@@ -33,8 +33,6 @@ export default class Zookeeper {
     this.client.on('connect', async () => {
       this.isConnected = true;
       this.createRequiredPathes();
-      await this.addNewNode('dust');
-      this.setData();
       logger.info(`session connected, id=${this.client.client_id}`);
     });
 
@@ -52,7 +50,7 @@ export default class Zookeeper {
   }
 
   private createRequiredPathes() {
-    if (this.exists(this.applicationPath)) return;
+    if (this.client.exists(this.applicationPath, false)) return;
     try {
       this.client.create(this.applicationPath, '', zookeeper.constants.ZOO_CONTAINER);
     } catch (e) {
@@ -72,24 +70,12 @@ export default class Zookeeper {
       }
     });
   }
-  async setData() {
+  async exists(path: string) {
     try {
-      // const d = await this.client.get(this.applicationPath + '/test', false);
-      // console.log(d);
-      // const del = await this.client.delete_(this.applicationPath + '/test', 2);
-      // console.log(del);
-      const test = await this.exists(this.applicationPath);
-      console.log(test);
+      const exists = await this.client.exists(path, false);
+      return true;
     } catch (e) {
-      logger.error(e);
+      return false;
     }
-  }
-  exists(path: string): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.client.a_exists(path, false, (res, err) => {
-        if (res === 0) resolve(true);
-        else reject(false);
-      });
-    });
   }
 }

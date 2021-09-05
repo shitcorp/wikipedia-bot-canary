@@ -11,13 +11,17 @@
     "lint": "npx eslint --ext .ts ./src",
     "lint:fix": "npx eslint --ext .ts ./src --fix",
     "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate"
+    "contributors:generate": "all-contributors generate",
+    "zk:init": "cd docker-compose && mkdir data && sudo chown 1001 data",
+    "zk:start": "docker-compose -f docker/zookeeper.yml up -d",
+    "zk:stop": "docker-compose -f docker/zookeeper.yml down"
   },
   "dependencies": {
     "@fluent/bundle": "^0.16.1",
     "dotenv": "^8.2.0",
     "fastify": "^3.20.2",
     "ioredis": "^4.27.8",
+    "jsonschema": "^1.4.0",
     "pino": "^7.0.0-rc.3",
     "slash-create": "^4.0.1",
     "wikijs": "^6.3.2",
