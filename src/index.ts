@@ -44,7 +44,7 @@ for (const signal of ['SIGINT', 'SIGTERM']) {
 }
 
 (async function main() {
-  const c = await ConfigService.getConfig('the');
+  const c = await ConfigService.getConfig('123456');
   console.log(c);
   const testConfig = {
     version: 1,
@@ -52,5 +52,5 @@ for (const signal of ['SIGINT', 'SIGTERM']) {
       lang: 'en'
     }
   };
-  const d = await ConfigService.setConfig('the', JSON.stringify(testConfig));
+  await ConfigService.setConfig('123456', JSON.stringify(testConfig));
 })();

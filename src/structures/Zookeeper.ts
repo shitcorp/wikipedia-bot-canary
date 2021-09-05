@@ -1,5 +1,5 @@
 import zookeeper from 'zookeeper';
-import { logger, trimLength } from '../utils';
+import { logger } from '../utils';
 
 export default class Zookeeper {
   private client: zookeeper;
@@ -33,6 +33,7 @@ export default class Zookeeper {
     this.client.on('connect', async () => {
       this.isConnected = true;
       this.createRequiredPathes();
+      this.addNewNode('configs');
       logger.info(`session connected, id=${this.client.client_id}`);
     });
 
@@ -57,22 +58,21 @@ export default class Zookeeper {
       logger.error(e);
     }
   }
-  addNewNode(nodeName: string) {
-    return new Promise((resolve, reject) => {
-      try {
-        this.client.mkdirp(this.applicationPath + '/' + nodeName, (err, res) => {
-          if (err) reject(false);
-          resolve(res);
-        });
-      } catch (e) {
-        logger.error(e);
-        reject(false);
-      }
-    });
+  async addNewNode(nodeName: string) {
+    try {
+      const res = await this.client.mkdirp(this.applicationPath + '/' + nodeName, (err, res) => {
+        console.log(err, res);
+      });
+      console.log(res);
+      return res;
+    } catch (e) {
+      logger.error(e);
+      return false;
+    }
   }
   async exists(path: string) {
     try {
-      const exists = await this.client.exists(path, false);
+      await this.client.exists(path, false);
       return true;
     } catch (e) {
       return false;
