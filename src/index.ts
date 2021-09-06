@@ -6,6 +6,9 @@ dotenv.config({ path: dotenvPath });
 import { SlashCreator, FastifyServer } from 'slash-create';
 import { logger, pinoOptions, cache, CService as ConfigService, ZClient } from './utils';
 
+import Fastify from 'fastify'
+import helmet from 'fastify-helmet';
+
 const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
   publicKey: process.env.DISCORD_PUBLIC_KEY,
@@ -28,12 +31,14 @@ creator.on('commandRun', (command, _, ctx) =>
 creator.on('commandRegister', (command) => logger.info(`Registered command: ${command.commandName}`));
 creator.on('commandError', (command, error) => logger.error(`Command ${command.commandName}:`, error));
 
+// create fastify server
+const fastify = Fastify({ logger: pinoOptions });
+
+// register helmet
+fastify.register(helmet);
+
 // This should serve in localhost:8020/interactions
-creator
-  .withServer(new FastifyServer({ logger: pinoOptions }))
-  .registerCommandsIn(path.join(__dirname, 'commands'))
-  .syncCommands()
-  .startServer();
+creator.withServer(new FastifyServer(fastify)).registerCommandsIn(path.join(__dirname, 'commands')).syncCommands().startServer();
 
 for (const signal of ['SIGINT', 'SIGTERM']) {
   process.on(signal, () => {
