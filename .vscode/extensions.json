@@ -4,6 +4,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
-    "macabeus.vscode-fluent"
+    "macabeus.vscode-fluent",
+    "ms-azuretools.vscode-docker"
   ]
 }
