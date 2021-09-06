@@ -1,7 +1,7 @@
 import { SlashCreator, CommandContext } from 'slash-create';
 import { Command } from '../structures/';
 import { Embed } from '../utils';
-import { partners } from '../config';
+import { BLUE, partners } from '../config';
 
 export default class WikiCommand extends Command {
   constructor(creator: SlashCreator) {
@@ -13,7 +13,7 @@ export default class WikiCommand extends Command {
 
   async run(ctx: CommandContext) {
     ctx.defer();
-    const partnerEmbed = new Embed().setAuthor('Wikipedia Bot').setColor('0099ff');
+    const partnerEmbed = new Embed().setAuthor('Wikipedia Bot').setColor(BLUE);
 
     for (const partner of partners) {
       partnerEmbed.addField(partner.name, `${partner.description}\n[Read more](${partner.link})`, true);

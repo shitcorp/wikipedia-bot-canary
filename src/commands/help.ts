@@ -1,4 +1,5 @@
 import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
+import { BLUE } from '../config';
 import { Command } from '../structures/';
 import { Embed } from '../utils';
 
@@ -31,7 +32,7 @@ export default class WikiCommand extends Command {
 
     const helpEmbed = new Embed()
       .setAuthor('Wikipedia - Help')
-      .setColor('0099ff')
+      .setColor(BLUE)
       .setDescription(
         'Here are the commands you can use with wikipedia bot. To get more information about a certain command, run the command /help <cmdname>'
       );

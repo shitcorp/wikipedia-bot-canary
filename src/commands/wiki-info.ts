@@ -2,6 +2,7 @@ import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
 import { Command } from '../structures/';
 import { Embed } from '../utils';
 import wiki from 'wikijs';
+import { BLUE } from '../config';
 
 export default class WikiCommand extends Command {
   constructor(creator: SlashCreator) {
@@ -38,7 +39,7 @@ export default class WikiCommand extends Command {
     const wikiEmbed = new Embed()
       .setAuthor('Wikipedia Bot')
       .setDescription(article.fullInfo().toString())
-      .setColor('0099ff')
+      .setColor(BLUE)
       .setURL(article.url());
 
     if (await article.mainImage()) wikiEmbed.setThumbnail(await article.mainImage());

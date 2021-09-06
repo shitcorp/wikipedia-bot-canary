@@ -1,4 +1,5 @@
 import { CommandOptionType, SlashCreator, CommandContext, ApplicationCommandType } from 'slash-create';
+import { BLUE } from '../config';
 import { Command } from '../structures/';
 import { Embed, getArticle, logger } from '../utils';
 
@@ -25,7 +26,7 @@ export default class WikiCommand extends Command {
     // const wikiEmbed = new Embed()
     //   .setAuthor('Wikipedia Bot')
     //   .setDescription(article.summary)
-    //   .setColor('0099ff')
+    //   .setColor(BLUE)
     //   .setURL(article.url);
 
     // if (article.image) wikiEmbed.setThumbnail(article.image);
