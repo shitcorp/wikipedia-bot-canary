@@ -14,3 +14,12 @@ logs/
 dist/
 docker/data
 docker/cluster
+
+# yarn stuff
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
