@@ -6,7 +6,6 @@ export default class WikiCommand extends Command {
   constructor(creator: SlashCreator) {
     super(creator, {
       name: 'wiki',
-      type: 1,
       description: 'The normal wiki command used for getting short summaries of something the user searched for.',
       options: [
         {
