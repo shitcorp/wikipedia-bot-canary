@@ -1,16 +1,18 @@
 {
-  "name": "slash-create-template",
+  "name": "wikipedia-bot-canary",
   "version": "1.0.0",
-  "description": "A template for slash-create",
+  "description": "A bot where you can search Wikipedia articles with it. Not affiliated with any service or product of the Wikimedia Foundation.",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "nodemon dist",
+    "dev": "yarn watch | yarn pc",
+    "watch": "nodemon src/index.ts",
     "pc": "pino-colada",
-    "build": "npx tsc",
-    "lint": "npx eslint --ext .ts ./src",
-    "lint:fix": "npx eslint --ext .ts ./src --fix",
+    "build": "tsc",
+    "lint": "eslint --ext .ts ./src",
+    "lint:fix": "eslint --ext .ts ./src --fix",
     "contributors:add": "all-contributors add",
+    "contributors:check": "all-contributors check",
     "contributors:generate": "all-contributors generate",
     "zk:init": "cd docker-compose && mkdir data && sudo chown 1001 data",
     "zk:start": "docker-compose -f docker/zookeeper.yml up -d",
@@ -37,13 +39,15 @@
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-prettier": "^3.3.0",
+    "nodemon": "^2.0.12",
     "pino-colada": "^2.1.0",
     "pino-pretty": "^6.0.0",
     "prettier": "^2.2.1",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.2.1",
     "typescript": "^4.2.3"
   },
   "engines": {
-    "node": ">=14.x.x"
+    "node": ">=14.x.x",
+    "yarn": ">=2.x.x"
   }
 }
