@@ -7,6 +7,6 @@ services:
       - '2181:2181'
       - '8080:8080'
     volumes:
-      - ./data:/bitnami/zookeeper
+      - ./volumes/zookeeper:/bitnami/zookeeper
     environment:
       - ALLOW_ANONYMOUS_LOGIN=true

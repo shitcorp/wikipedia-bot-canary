@@ -1,0 +1,26 @@
+# Packages
+node_modules/
+package-lock.json
+
+# Log files
+logs/
+*.log
+
+# Miscellaneous
+.tmp/
+.vscode/**/*
+!.vscode/extensions.json
+.env
+dist/
+docker/data
+docker/cluster
+docker/volumes
+
+# yarn stuff
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*

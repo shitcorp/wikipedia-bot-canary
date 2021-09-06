@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  redis:
+    container_name: redis
+    image: redis
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+      - '8080:8080'
+    volumes:
+      - ./docker/volumes/zookeeper:/bitnami/zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=true
+
+  wiki-bot:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    depends_on: 
+      - zookeeper
+      - redis
