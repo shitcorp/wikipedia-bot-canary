@@ -14,6 +14,7 @@ logs/
 dist/
 docker/data
 docker/cluster
+docker/volumes
 
 # yarn stuff
 .yarn/*
