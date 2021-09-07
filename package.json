@@ -50,5 +50,6 @@
   "engines": {
     "node": ">=14.x.x",
     "yarn": ">=2.x.x"
-  }
+  },
+  "packageManager": "yarn@3.0.2"
 }
