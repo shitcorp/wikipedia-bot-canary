@@ -1,5 +1,5 @@
 import { pino } from 'pino';
-import * as pinocolada from 'pino-colada';
+import pinocolada from 'pino-colada';
 
 export const pinoOptions = {
   level: process.env.DEBUG !== 'true' ? 'info' : 'debug' || 'info',
