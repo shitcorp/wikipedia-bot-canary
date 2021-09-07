@@ -1,5 +1,5 @@
 # Alias node base image
-FROM node:14 as node
+FROM node:16.7.0 as node
 
 # Builder image
 FROM node as builder
