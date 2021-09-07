@@ -47,15 +47,3 @@ for (const signal of ['SIGINT', 'SIGTERM']) {
     process.exit(0);
   });
 }
-
-(async function main() {
-  const c = await ConfigService.getConfig('123456');
-  console.log(c);
-  const testConfig = {
-    version: 1,
-    config: {
-      lang: 'en'
-    }
-  };
-  await ConfigService.setConfig('123456', JSON.stringify(testConfig));
-})();
