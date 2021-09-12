@@ -14,7 +14,4 @@ export default class Command extends SlashCommand {
       options: opts.options
     });
   }
-  getHelpEmbed() {
-    return new Embed().setAuthor(`Wikipedia - ${this.commandName}`).setDescription(this.description).setColor(GREEN);
-  }
 }
