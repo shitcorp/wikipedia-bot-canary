@@ -5,6 +5,7 @@ if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cw
 dotenv.config({ path: dotenvPath });
 import { SlashCreator, FastifyServer } from 'slash-create';
 import { logger, pinoOptions, cache, CService as ConfigService, ZClient } from './utils';
+import pino from 'pino';
 
 import Fastify from 'fastify';
 import helmet from 'fastify-helmet';
@@ -44,10 +45,54 @@ creator
   .syncCommands()
   .startServer();
 
-for (const signal of ['SIGINT', 'SIGTERM']) {
-  process.on(signal, () => {
-    ZClient.getClient().close();
-    logger.info(`Received ${signal}, shutting down...`);
-    process.exit(0);
-  });
+/**
+ * Handle process events
+ */
+
+/**
+ * Handles exit signal events
+ * @param signal
+ */
+function handleSignal(signal: NodeJS.Signals) {
+  // close zookeeper connection
+  ZClient.getClient().close();
+  // close cache connection
+  cache.disconnect();
+  // flush logs after log
+  pino.final(logger).info({ signal }, `Received ${signal}, shutting down...`);
+  // clean exit
+  process.exit(0);
+
 }
+
+process.on('SIGINT', handleSignal);
+process.on('SIGTERM', handleSignal);
+
+process.on('beforeExit', (code) => {
+  pino.final(logger).info({ code }, `Process beforeExit event with code ${code}`);
+});
+
+process.on('exit', (code) => {
+  pino.final(logger).info({ code }, `Process exit event with code ${code}`);
+});
+
+// The process will still crash if no 'uncaughtException' listener is installed.
+process.on('uncaughtExceptionMonitor', (error, origin) => {
+  pino.final(logger).error({ error, origin }, 'Caught an uncaught exception');
+  // // Uncaught Fatal Exception
+  // process.exit(1);
+});
+
+process.on('multipleResolves', (type, promise, reason) => {
+  pino.final(logger).error({ type, promise, reason }, 'Multiple resolves');
+  // Uncaught Fatal Exception
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error({ promise, reason }, 'Unhandled rejection');
+});
+
+process.on('warning', (warning) => {
+  logger.warn(warning);
+});
