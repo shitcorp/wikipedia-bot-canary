@@ -62,6 +62,7 @@ function handleSignal(signal: NodeJS.Signals) {
   pino.final(logger).info({ signal }, `Received ${signal}, shutting down...`);
   // clean exit
   process.exit(0);
+
 }
 
 process.on('SIGINT', handleSignal);

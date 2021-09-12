@@ -4,7 +4,7 @@
 
 Pre-requirement:
 
-- [Node.js](http://nodejs.org) **version 14+**
+- [Node.js](http://nodejs.org) **version 16+**
 - [Yarn](https://yarnpkg.com/getting-started/install)
 
 Clone the repo:
@@ -84,7 +84,7 @@ The `generate` suffix is for generating the list of contributors in the `README.
 
 #### `yarn zk:init`, `yarn zk:start`, `yarn zk:stop`
 
-The `contributors:` prefix indicates the command is for `zookeeper`.
+The `zookeeper:` prefix indicates the command is for `zookeeper`.
 
 The `init` suffix is for setting up the environment for zookeeper.
 

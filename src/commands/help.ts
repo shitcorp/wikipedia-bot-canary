@@ -1,6 +1,6 @@
 import { CommandOptionType, SlashCreator, CommandContext } from 'slash-create';
-import { BLUE } from '../config';
 import { Command } from '../structures/';
+import { BLUE } from '../config';
 import { Embed } from '../utils';
 
 export default class WikiCommand extends Command {
@@ -8,6 +8,7 @@ export default class WikiCommand extends Command {
     super(creator, {
       name: 'help',
       description: 'Information on how to use the bot and its commands.',
+      guildIDs: process.env.NODE_ENV === 'production' ? [] : [process.env.DEV_GUILD],
       options: [
         {
           type: CommandOptionType.STRING,
@@ -20,28 +21,50 @@ export default class WikiCommand extends Command {
   }
 
   async run(ctx: CommandContext) {
+    ctx.defer();
+
+    const baseEmbed = new Embed().setColor(BLUE);
     if (ctx.options.cmd) {
-      console.log(this.creator.commands.get(ctx.options.cmd));
-      const cmd = this.creator.commands.get(ctx.options.cmd);
+      const cmd = this.creator.commands.find((commandName) => commandName.commandName === ctx.options.cmd);
       if (!cmd) {
         return 'That command does not exist.';
       }
-      // @ts-ignore
-      return cmd.getHelpEmbed();
+      let desc = cmd.description;
+      const detailEmbed = baseEmbed.setAuthor(`Command: ${ctx.options.cmd}`);
+      if (cmd.options) {
+        desc += '\n\n__**Command Options:**__ \n';
+
+        cmd.options.forEach((option) => {
+          console.log(option);
+          let optionDesc = option.description;
+          // @ts-ignore
+          if (option.choices) {
+            optionDesc += ` (available: \``;
+            // @ts-ignore
+            option.choices.forEach((choice) => {
+              optionDesc += choice.name + ' | ';
+            });
+            optionDesc = optionDesc.slice(0, -3);
+            optionDesc += `\`)`;
+          }
+          detailEmbed.addField(option.required ? option.name + '*' : option.name, optionDesc);
+        });
+        detailEmbed.setFooter('* = required');
+      }
+      return {
+        embeds: [detailEmbed.setDescription(desc)]
+      };
     }
 
-    const helpEmbed = new Embed()
-      .setAuthor('Wikipedia - Help')
-      .setColor(BLUE)
-      .setDescription(
-        'Here are the commands you can use with wikipedia bot. To get more information about a certain command, run the command /help <cmdname>'
-      );
+    let output =
+      '\nHere are the commands you can use with wikipedia bot. To get more information about a certain command, run the command /help <cmdname> \n\n';
     this.creator.commands.forEach((cmd) => {
       if (cmd.commandName === 'help') return;
-      helpEmbed.addField(cmd.commandName, cmd.description, true);
+      output += `**/${cmd.commandName}** \n > ${cmd.description}\n`;
     });
-    ctx.defer();
 
-    return { embeds: [helpEmbed] };
+    return {
+      embeds: [baseEmbed.setAuthor('Wikipedia - Help').setDescription(output)]
+    };
   }
 }

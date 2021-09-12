@@ -110,6 +110,16 @@ export default class Embed {
   }
 
   /**
+   * Sets the description of this embed.
+   * @param description
+   */
+  public setDesc(description: string): this {
+    this.embed.description = trimLength(description, descriptionLen);
+
+    return this;
+  }
+
+  /**
    * Sets the footer of this embed.
    * @param text
    * @param iconURl

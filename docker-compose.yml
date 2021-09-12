@@ -19,6 +19,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    depends_on: 
+    depends_on:
       - zookeeper
       - redis

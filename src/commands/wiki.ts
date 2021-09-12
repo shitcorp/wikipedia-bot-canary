@@ -18,35 +18,35 @@ export default class WikiCommand extends Command {
         {
           type: CommandOptionType.STRING,
           name: 'language',
-          description: 'Specify a language.',
+          description: 'Specify the language.',
           required: false,
           choices: [
             {
-              name: 'de',
+              name: 'German',
               value: 'de'
             },
             {
-              name: 'fr',
+              name: 'French',
               value: 'fr'
             },
             {
-              name: 'es',
+              name: 'Spanish',
               value: 'es'
             },
             {
-              name: 'ru',
+              name: 'Russian',
               value: 'ru'
             },
             {
-              name: 'sl',
+              name: 'Slovenian',
               value: 'sl'
             },
             {
-              name: 'tr',
+              name: 'Turkish',
               value: 'tr'
             },
             {
-              name: 'yi',
+              name: 'Yiddish',
               value: 'yi'
             }
           ]
@@ -56,9 +56,6 @@ export default class WikiCommand extends Command {
   }
 
   async run(ctx: CommandContext) {
-    console.log(ctx);
-    logger.info(ctx);
-    if (ctx.commandType === 3) return 'Hello world';
     ctx.defer();
 
     const article = await getArticle(ctx.options.search, ctx.options.language);
