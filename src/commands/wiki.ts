@@ -57,10 +57,10 @@ export default class WikiCommand extends Command {
 
   async run(ctx: CommandContext) {
     ctx.defer();
-
     const article = await getArticle(ctx.options.search, ctx.options.language);
     const wikiEmbed = new Embed()
       .setAuthor('Wikipedia Bot')
+      .setTitle(ctx.options.search)
       .setDescription(article.summary)
       .setColor(BLUE)
       .setURL(article.url);

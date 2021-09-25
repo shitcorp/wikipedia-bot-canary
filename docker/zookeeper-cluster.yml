@@ -11,7 +11,7 @@ services:
       - ZOO_SERVER_ID=1
       - ZOO_SERVERS=0.0.0.0:2888:3888,zk2:2888:3888,zk3:2888:3888
     volumes:
-      - ./cluster/zk1:/bitnami/zookeeper
+      - ./volumes/cluster/zk1:/bitnami/zookeeper
   zk2:
     container_name: zk2
     hostname: zk2
@@ -23,7 +23,7 @@ services:
       - ZOO_SERVER_ID=2
       - ZOO_SERVERS=zk1:2888:3888,0.0.0.0:2888:3888,zk3:2888:3888
     volumes:
-      - ./cluster/zk2:/bitnami/zookeeper
+      - ./volumes/cluster/zk2:/bitnami/zookeeper
   zk3:
     container_name: zk3
     hostname: zk3
@@ -35,7 +35,7 @@ services:
       - ZOO_SERVER_ID=3
       - ZOO_SERVERS=zk1:2888:3888,zk2:2888:3888,0.0.0.0:2888:3888
     volumes:
-      - ./cluster/zk3:/bitnami/zookeeper
+      - ./volumes/cluster/zk3:/bitnami/zookeeper
 
   zoonavigator:
     container_name: zoonavigator

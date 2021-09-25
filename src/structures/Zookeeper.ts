@@ -10,7 +10,9 @@ export default class Zookeeper {
     this.applicationPath = process.env.ZOOKEEPER_APPLICATION_PATH || '/wikibot-canary-dev-local';
     if (!this.applicationPath.startsWith('/')) this.applicationPath = '/' + this.applicationPath;
 
-    const host = process.env.ZOOKEEPER_HOST || '127.0.0.1:2181';
+    const host = process.env.ZOOKEEPER_HOST.includes(',')
+      ? process.env.ZOOKEEPER_HOST.split(',')
+      : process.env.ZOOKEEPER_HOST || '127.0.0.1:2181';
     const config = {
       connect: host,
       timeout: 5000,
@@ -33,7 +35,7 @@ export default class Zookeeper {
     this.client.on('connect', async () => {
       this.isConnected = true;
       this.createRequiredPathes();
-      this.addNewNode('configs');
+      this.addNewNode('someDir/test');
       logger.info(`session connected, id=${this.client.client_id}`);
     });
 
@@ -60,13 +62,14 @@ export default class Zookeeper {
   }
   async addNewNode(nodeName: string) {
     try {
-      const res = await this.client.mkdirp(this.applicationPath + '/' + nodeName, (err, res) => {
-        console.log(err, res);
+      return await this.client.mkdirp(this.applicationPath + '/' + nodeName, (err, res) => {
+        void res;
+        if (err) {
+          logger.debug(err);
+        }
       });
-      console.log(res);
-      return res;
     } catch (e) {
-      logger.error(e);
+      logger.debug(e);
       return false;
     }
   }

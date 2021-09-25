@@ -331,6 +331,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/phin@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@types/phin@npm:3.4.0"
+  dependencies:
+    phin: "*"
+  checksum: 352731ba56f97d3069c5d1cfd9f52c419ebd51f0563818480fa26e9755bf99ba2c41dd5d96b775444521e15850994e7f17047aec579b7b9b20d407987da820bc
+  languageName: node
+  linkType: hard
+
 "@types/qs@npm:*":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
@@ -931,6 +940,13 @@ __metadata:
   version: 5.3.1
   resolution: "camelcase@npm:5.3.1"
   checksum: e6effce26b9404e3c0f301498184f243811c30dfe6d0b9051863bd8e4034d09c8c2923794f280d6827e5aa055f6c434115ff97864a16a963366fb35fd673024b
+  languageName: node
+  linkType: hard
+
+"centra@npm:^2.4.2":
+  version: 2.5.0
+  resolution: "centra@npm:2.5.0"
+  checksum: f3c66d372a886cd2311bc6b25a4ba4e354170928161bba0bc0995d9697e65b93bc7de115f85c4b8202f8d556f629434531ef2326ce36f222a4e6dde86e36fc75
   languageName: node
   linkType: hard
 
@@ -2724,13 +2740,6 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"jsonschema@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "jsonschema@npm:1.4.0"
-  checksum: a2f96b5154658f5567b064d6f25fa4cb7e38b923d5dce9dad8d2566a07dd94abc4acedf234333a91f31bc9934e9dd57c270dcc51e5656b4c104408196c768580
-  languageName: node
-  linkType: hard
-
 "keyv@npm:^3.0.0":
   version: 3.1.0
   resolution: "keyv@npm:3.1.0"
@@ -3452,6 +3461,15 @@ fsevents@~2.3.2:
   version: 1.2.0
   resolution: "pend@npm:1.2.0"
   checksum: 6c72f5243303d9c60bd98e6446ba7d30ae29e3d56fdb6fae8767e8ba6386f33ee284c97efe3230a0d0217e2b1723b8ab490b1bbf34fcbb2180dbc8a9de47850d
+  languageName: node
+  linkType: hard
+
+"phin@npm:*, phin@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "phin@npm:3.6.0"
+  dependencies:
+    centra: ^2.4.2
+  checksum: 566c69615493a0856c75823e0f34c95560e0b7d95fbc4f51b152b1b0a8a3c2eb872ce46d81d046719b7e4aaa6d6cb255aee300e341875597dcfd4b34fd8de111
   languageName: node
   linkType: hard
 
@@ -4893,6 +4911,7 @@ typescript@^4.2.3:
     "@types/express": ^4.17.11
     "@types/ioredis": ^4.27.1
     "@types/node": ^14.14.37
+    "@types/phin": ^3.4.0
     "@typescript-eslint/eslint-plugin": ^4.19.0
     "@typescript-eslint/parser": ^4.19.0
     all-contributors-cli: ^6.20.0
@@ -4905,8 +4924,8 @@ typescript@^4.2.3:
     fastify-helmet: ^5.3.2
     franc: ^6.0.0
     ioredis: ^4.27.8
-    jsonschema: ^1.4.0
     nodemon: ^2.0.12
+    phin: ^3.6.0
     pino: ^7.0.0-rc.3
     pino-colada: ^2.1.0
     pino-pretty: ^6.0.0

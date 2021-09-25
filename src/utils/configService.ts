@@ -1,22 +1,10 @@
 import { ZClient, logger } from '.';
-import { Validator } from 'jsonschema';
-import { version1 } from '../config/schemas';
 
 class configService {
-  validator: Validator;
-  constructor() {
-    this.validator = new Validator();
-    const test = {
-      version: 1,
-      config: {
-        lang: 'en'
-      }
-    };
-    console.log(this.validator.validate(test, version1));
-  }
+  constructor() {}
   async getConfig(id: string) {
     if (ZClient.isConnected !== true) {
-      logger.debug('Zookeeper client not connected yet, retying in 1 second');
+      logger.debug('[CONFIG SERVICE.getConfig] Zookeeper client not connected yet, retying in 1 second');
       setTimeout(() => this.getConfig(id), 1000);
     }
     if (ZClient.getClient().exists(ZClient.getApplicationPath() + '/configs/' + id, false)) {

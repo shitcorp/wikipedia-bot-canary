@@ -23,6 +23,7 @@ export default class WikiCommand extends Command {
     const article = await getArticle(searchTerm);
     const wikiEmbed = new Embed()
       .setAuthor('Wikipedia Bot')
+      .setTitle(searchTerm)
       .setDescription(article.summary)
       .setColor(BLUE)
       .setURL(article.url);

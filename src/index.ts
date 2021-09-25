@@ -46,10 +46,6 @@ creator
   .startServer();
 
 /**
- * Handle process events
- */
-
-/**
  * Handles exit signal events
  * @param signal
  */
@@ -62,7 +58,6 @@ function handleSignal(signal: NodeJS.Signals) {
   pino.final(logger).info({ signal }, `Received ${signal}, shutting down...`);
   // clean exit
   process.exit(0);
-
 }
 
 process.on('SIGINT', handleSignal);
@@ -79,8 +74,6 @@ process.on('exit', (code) => {
 // The process will still crash if no 'uncaughtException' listener is installed.
 process.on('uncaughtExceptionMonitor', (error, origin) => {
   pino.final(logger).error({ error, origin }, 'Caught an uncaught exception');
-  // // Uncaught Fatal Exception
-  // process.exit(1);
 });
 
 process.on('multipleResolves', (type, promise, reason) => {
