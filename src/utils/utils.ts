@@ -26,9 +26,9 @@ export async function getArticle(searchterm: string, lang = 'en') {
     summary: await page.summary(),
     image: (await page.mainImage()) || null
   });
-  // article.cache() gives the article the cached timestamp
-  // and returns the article to json
-  cache.set(searchterm, article.cache(), 'ex', 604800);
+  // the article.cache() method gives the article the
+  // cached timestamp and returns the article as json
+  cache.set(sanitizedSearchTerm, article.cache(), 'ex', 604800);
   return article;
 }
 

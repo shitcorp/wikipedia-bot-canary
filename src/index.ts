@@ -1,6 +1,11 @@
-// external imports
+// config
 import dotenv from 'dotenv';
 import path from 'path';
+let dotenvPath = path.join(process.cwd(), '.env');
+if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
+dotenv.config({ path: dotenvPath });
+
+// external imports
 import pino from 'pino';
 import { SlashCreator, FastifyServer } from 'slash-create';
 import Fastify from 'fastify';
@@ -8,10 +13,6 @@ import helmet from 'fastify-helmet';
 
 // internal imports
 import { logger, pinoOptions, cache, ConfigService, ZooKeeper } from './utils';
-
-let dotenvPath = path.join(process.cwd(), '.env');
-if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
-dotenv.config({ path: dotenvPath });
 
 const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,

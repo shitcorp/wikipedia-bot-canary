@@ -26,6 +26,7 @@
 
 4. **Ngrok Setup**:
     If you have an ngrok account, run `export NGROK_TOKEN=<yourToken>`. Then run `yarn ngrok` to start a new tunnel. The tunnel url will be printed to console.
+    > **(!)** If your server is not running on port 8020, run `export PORT=<your port>`
 
 5. **Services Setup**:
     To start developing we need a few services set up. [ZooKeeper](https://zookeeper.apache.org) and [Redis](https://redis.io) to be precise. In order to get these 2 services running we provided a docker-compose file that lives in the root of this repository, so its just a matter of running `docker-compose up -d`.
@@ -75,6 +76,11 @@ The `ngrok` command starts a new tunnel to ngrok.io so you can do your local dev
 export NGROK_TOKEN=yourNgrokToken
 ```
 first in order for the script to know your ngrok token (mandatory).
+
+To point the ngrok tunnel to a custom port, set the environmental varibale `PORT`.
+```bash
+export PORT=<your port>
+```
 
 
 ### `yarn pc`

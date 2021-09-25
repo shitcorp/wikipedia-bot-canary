@@ -11,11 +11,12 @@ import { combineArrays } from '.';
     console.table(updater);
   };
 
-  const token = process.env.NGROK_TOKEN;
+  const authtoken = process.env.NGROK_TOKEN;
+  const addr = process.env.PORT || 8020;
   const url = await ngrok.connect({
     proto: 'http',
-    addr: 8020,
-    authtoken: token,
+    addr,
+    authtoken,
     onLogEvent: (data: any) => {
       const temp = data.split('=');
       const keys = ['t'];
