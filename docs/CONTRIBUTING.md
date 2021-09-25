@@ -12,7 +12,7 @@
 1. Clone the repo:
 
     ```bash
-    git clone https://github.com/wikipedia-bot/   wikipedia-bot-canary.git
+    git clone https://github.com/wikipedia-bot/wikipedia-bot-canary.git
     ```
 
 2. Install dependencies:
