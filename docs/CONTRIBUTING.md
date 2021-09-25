@@ -2,35 +2,51 @@
 
 ## Development Setup
 
-Pre-requirement:
+### Pre-requirements
 
-- [Node.js](http://nodejs.org) **version 16+**
+- [Node.js](http://nodejs.org) **version 16+** (for nvm users, just run `nvm use`)
 - [Yarn](https://yarnpkg.com/getting-started/install)
 
-Clone the repo:
+### Steps
 
-```bash
-git clone https://github.com/wikipedia-bot/wikipedia-bot-canary.git
-```
+1. Clone the repo:
 
-Install dependencies:
+    ```bash
+    git clone https://github.com/wikipedia-bot/   wikipedia-bot-canary.git
+    ```
 
-```bash
-yarn install
-```
+2. Install dependencies:
 
-Make a copy of the file `.env.example`, name it `.env`, and fill in the values left blank.
+    ```bash
+    yarn install
+    ```
 
-Watch code for changes:
+3. **Configuration**:
+    Make a copy of the file `.env.example`, name it `.env`, and fill in the values left blank.
 
-```bash
-yarn dev
-```
+4. **Ngrok Setup**:
+    If you have an ngrok account, run `export NGROK_TOKEN=<yourToken>`. Then run `yarn ngrok` to start a new tunnel. The tunnel url will be printed to console.
+
+5. **Services Setup**:
+    To start developing we need a few services set up. [ZooKeeper](https://zookeeper.apache.org) and [Redis](https://redis.io) to be precise. In order to get these 2 services running we provided a docker-compose file that lives in the root of this repository, so its just a matter of running `docker-compose up -d`.
+
+6. Watch code for changes:
+    > **(!)** This script only works on linux and mac os since we use the `&` operator. To get the same result on windows run the commands `tsc --watch` and `nodemon dist` in 2 seperate terminals. Another solution would be to install [concurrently](https://www.npmjs.com/package/concurrently) globally and then running the command `yarn dev:windows` or `concurrently "tsc --watch" "nodemon dist"`
+
+    ```bash
+    yarn dev
+    ```
+
+### Tools
 
 Main tools that used in this project:
 
 - [TypeScript](https://www.typescriptlang.org/) as the development language
 - [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/) for code linting and formatting
+- [Slash-Create](https://slash-create.js.org) as framework to interact with the discord API
+
+- [ZooKeeper](https://zookeeper.apache.org/) as distributed configmanager
+- [Redis](https://redis.io) as caching solution
 
 ## Contributing Guidelines
 
@@ -51,6 +67,15 @@ The `dev` command runs both the `watch` and `pc` commands. It pipes the output o
 ### `yarn watch`
 
 The `watch` command runs `nodemon` to watch for changes to the typescript files, and then rebuild the project on the fly.
+
+### `yarn ngrok`
+
+The `ngrok` command starts a new tunnel to ngrok.io so you can do your local developemt without having to own a webserver. Run
+```bash
+export NGROK_TOKEN=yourNgrokToken
+```
+first in order for the script to know your ngrok token (mandatory).
+
 
 ### `yarn pc`
 
