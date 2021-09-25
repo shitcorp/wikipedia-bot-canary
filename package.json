@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "dev": "tsc --watch & nodemon dist",
     "dev:windows": "concurrently \"tsc --watch\" \"nodemon dist\"",
-    "ngrok": "tsc && node dist/utils/ngrok.js",
+    "ngrok": "tsc && node dist/utils/ext_ngrok.js",
     "clean": "rm dist -rf",
     "build": "tsc",
     "lint": "eslint --ext .ts ./src",

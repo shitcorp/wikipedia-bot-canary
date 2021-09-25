@@ -1,6 +1,6 @@
 import { EmbedOptions, EmbedField } from '../../@types/embeds';
 import { wikipediaIcon } from '../config';
-import trimLength from './trimLength';
+import { trimLength } from '.';
 
 // interface EmbedObject {
 //   title?: string;

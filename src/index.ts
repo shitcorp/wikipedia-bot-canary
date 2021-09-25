@@ -1,14 +1,17 @@
+// external imports
 import dotenv from 'dotenv';
 import path from 'path';
+import pino from 'pino';
+import { SlashCreator, FastifyServer } from 'slash-create';
+import Fastify from 'fastify';
+import helmet from 'fastify-helmet';
+
+// internal imports
+import { logger, pinoOptions, cache, ConfigService, ZooKeeper } from './utils';
+
 let dotenvPath = path.join(process.cwd(), '.env');
 if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
 dotenv.config({ path: dotenvPath });
-import { SlashCreator, FastifyServer } from 'slash-create';
-import { logger, pinoOptions, cache, CService as ConfigService, ZClient } from './utils';
-import pino from 'pino';
-
-import Fastify from 'fastify';
-import helmet from 'fastify-helmet';
 
 const creator = new SlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
@@ -51,7 +54,7 @@ creator
  */
 function handleSignal(signal: NodeJS.Signals) {
   // close zookeeper connection
-  ZClient.getClient().close();
+  ZooKeeper.getClient().close();
   // close cache connection
   cache.disconnect();
   // flush logs after log

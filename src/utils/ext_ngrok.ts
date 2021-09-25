@@ -1,4 +1,5 @@
 import ngrok from 'ngrok';
+import { combineArrays } from '.';
 (async function () {
   const updater = {
     'Tunnel Status': 'connecting',
@@ -9,13 +10,7 @@ import ngrok from 'ngrok';
     console.clear();
     console.table(updater);
   };
-  // https://www.tutorialspoint.com/how-to-combine-2-arrays-into-1-object-in-javascript
-  const combineArrays = (first, second) => {
-    return first.reduce((acc, val, ind) => {
-      acc[val] = second[ind];
-      return acc;
-    }, {});
-  };
+
   const token = process.env.NGROK_TOKEN;
   const url = await ngrok.connect({
     proto: 'http',
