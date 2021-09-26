@@ -3,7 +3,7 @@
 # Put your environment variables here
 export NODE_ENV=testing
 
-if [ $CI = "true" ] ; then
+if [ $CI == "true" ] ; then
   # Run tests and pipe output html to file
   yarn cucumber > ./features/results/index.html &&\
   # Generate a JSON file with the results
