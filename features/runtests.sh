@@ -18,6 +18,9 @@ if [ $CI = "true" ] ; then
   # cant archive the results folder while we write the resulting
   # tarball to the same folder at the same time
   mv ./features/results.tar ./features/results/results.tar &&\
+  # Rerun the tests but pretend we are not on a CI environment
+  # so we get the nice pretty output to console to see if the tests
+  # passed without havint to unpack the results archive
   export CI=false &&\
   yarn cucumber
 else
