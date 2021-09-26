@@ -48,6 +48,7 @@ Main tools that used in this project:
 
 - [ZooKeeper](https://zookeeper.apache.org/) as distributed configmanager
 - [Redis](https://redis.io) as caching solution
+- [Cucumber](https://cucumber.io) for testing. [Read this](../features/README.md) to learn more
 
 ## Contributing Guidelines
 

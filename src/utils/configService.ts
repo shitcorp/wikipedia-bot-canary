@@ -1,4 +1,4 @@
-import { ZClient, logger } from '.';
+import { ZooKeeper as ZClient, logger } from '.';
 
 class configService {
   constructor() {}

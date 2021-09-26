@@ -8,6 +8,7 @@
     "dev": "tsc --watch & nodemon dist",
     "dev:windows": "concurrently \"tsc --watch\" \"nodemon dist\"",
     "ngrok": "tsc && node dist/utils/ext_ngrok.js",
+    "test": "NODE_ENV=testing cucumber-js",
     "clean": "rm dist -rf",
     "build": "tsc",
     "lint": "eslint --ext .ts ./src",
@@ -34,8 +35,11 @@
     "zookeeper": "^4.10.0"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^7.3.1",
+    "@cucumber/pretty-formatter": "^1.0.0-alpha.1",
     "@types/express": "^4.17.11",
     "@types/ioredis": "^4.27.1",
+    "@types/jest": "^27.0.2",
     "@types/node": "^14.14.37",
     "@types/phin": "^3.4.0",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
@@ -45,6 +49,7 @@
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-prettier": "^3.3.0",
+    "ioredis-mock": "^5.6.0",
     "ngrok": "^4.2.2",
     "nodemon": "^2.0.12",
     "pino-colada": "^2.1.0",
