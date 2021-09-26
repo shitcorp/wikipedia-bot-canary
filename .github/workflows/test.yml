@@ -1,9 +1,9 @@
-name: Lint
+name: Test
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,5 +33,11 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
 
-      - name: Lint
-        run: yarn lint
+      - name: Test and generate coverage report
+        run: yarn test
+
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: Generate test results for ${GITHUB_SHA}
