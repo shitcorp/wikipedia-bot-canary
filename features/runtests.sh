@@ -17,6 +17,8 @@ if [ $CI = "true" ] ; then
   tar -czf ./features/results.tar ./features/results &&\
   # Remove the generated html file
   rm -rf ./features/results/index.html &&\
+  # Remove the progress json file because its not human readable
+  rm -rf ./features/results/results.json &&\
   # Move the results archive to the results folder since we
   # cant archive the results folder while we write the resulting
   # tarball to the same folder at the same time
