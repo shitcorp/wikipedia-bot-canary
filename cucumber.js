@@ -21,12 +21,6 @@ switch (process.env.CI) {
     break;
 }
 
-if (process.env.CI !== 'true') {
-  // this formatter will be used when running the tests locally
-} else if (process.env.CI === 'true') {
-  // when running on CI the runtests.sh script will use this formatter
-  // and pipe the resulting html to a file that we can use later on
-} else
-  module.exports = {
-    default: common.join(' ')
-  };
+module.exports = {
+  default: common.join(' ')
+};
