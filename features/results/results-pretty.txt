@@ -26,4 +26,4 @@ Feature: Simple maths # features/add.feature:1
 
 4 scenarios (4 passed)
 12 steps (12 passed)
-0m00.027s (executing steps: 0m00.005s)
+0m00.040s (executing steps: 0m00.004s)
