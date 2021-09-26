@@ -4,7 +4,25 @@
 export NODE_ENV=testing
 
 if [ $CI = "true" ] ; then
-  yarn cucumber > ./features/results/index.html && echo "<!-- Generated on: $(date) -->" >> ./features/results/index.html && echo "{ \"files\": [\"index.html\", \"results.tar\"], \"generated\": \"$(date)\", \"generated_unix\": \"$(date +"%s")\" }" > ./features/results/meta.json && tar -czf ./features/results.tar ./features/results && rm -rf ./features/results/index.html && mv ./features/results.tar ./features/results/results.tar
+  # Run tests and pipe output html to file
+  yarn cucumber > ./features/results/index.html &&\
+  # Add the generation date to the generated html
+  echo "<!-- Generated on: $(date) -->" >> ./features/results/index.html &&\
+  # Generate a metadata json file with the generation info
+  echo "{ \"files\": [\"index.html\", \"results.tar\"], \"generated\": \"$(date)\", \"generated_unix\": \"$(date +"%s")\" }" > ./features/results/meta.json &&\
+  # Add the generated html and metadata to the results archive
+  tar -czf ./features/results.tar ./features/results &&\
+  # Remove the generated html file
+  rm -rf ./features/results/index.html &&\
+  # Move the results archive to the results folder since we
+  # cant archive the results folder while we write the resulting
+  # tarball to the same folder at the same time
+  mv ./features/results.tar ./features/results/results.tar &&\
+  export CI=false &&\
+  yarn cucumber
 else
+  # sine we are running locally the results will be printed to
+  # STDOUT. The formatter is a different one. For details consult
+  # the '../cucumber.js' file as well as the cucumber documentation
   yarn cucumber
 fi
