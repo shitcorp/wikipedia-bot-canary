@@ -1,0 +1,36 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # fetch all commits to get last updated time or other git log info
+          fetch-depth: 0
+
+      - name: Build Container
+        id: build-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: wikibot-canary
+          tags: v1-alpha ${{ github.sha }}
+          containerfiles: |
+            ./docker/Dockerfile
+      - name: Push To ghcr.io
+        id: push-to-ghcr
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
+          registry: ghcr.io/wikipedia-bot/wikipedia-bot-canary
+          username: wikipedia-bot
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Print image url
+        run: echo "Image pushed to ${{ steps.push-to-ghcr.outputs.registry-paths }}"
+
