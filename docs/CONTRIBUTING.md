@@ -36,10 +36,15 @@ If you would prefer to use a prefabricated, "just works" environment, we provide
     To start developing we need a few services set up. [ZooKeeper](https://zookeeper.apache.org) and [Redis](https://redis.io) to be precise. In order to get these 2 services running we provided a docker-compose file that lives in the root of this repository, so its just a matter of running `docker-compose up -d`.
 
 6. Watch code for changes:
-    > **(!)** This script only works on linux and mac os since we use the `&` operator. To get the same result on windows run the commands `tsc --watch` and `nodemon dist` in 2 seperate terminals. Another solution would be to install [concurrently](https://www.npmjs.com/package/concurrently) globally and then running the command `yarn dev:windows` or `concurrently "tsc --watch" "nodemon dist"`
-
+   
+    Linux & Mac OS 
     ```bash
     yarn dev
+    ```
+
+    Windows
+    ```bash
+    yarn dev:windows
     ```
 
 ### Tools
