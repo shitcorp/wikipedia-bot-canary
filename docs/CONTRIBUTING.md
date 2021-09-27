@@ -2,6 +2,10 @@
 
 ## Development Setup
 
+### Alternative Environments
+
+If you would prefer to use a prefabricated, "just works" environment, we provide a Docker DevContainer for your convenience.
+
 ### Pre-requirements
 
 - [Node.js](http://nodejs.org) **version 16+** (for nvm users, just run `nvm use`)
