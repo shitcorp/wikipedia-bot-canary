@@ -32,7 +32,7 @@ jobs:
       - name: Build Container
         id: build-image
         run: |
-          ./dist_linux/docker-slim build ./docker/Dockerfile --dockerfile-context $GITHUB_WORKSPACE --tag ${{ env.docker-image }}:${{ env.docker-tag }} --tag ${{ env.docker-image }}:${{ github.sha }} --http-probe-off -exec "Continue" --continue-after exec
+          ./dist_linux/docker-slim build --dockerfile ./docker/Dockerfile --dockerfile-context $GITHUB_WORKSPACE --tag ${{ env.docker-image }}:${{ env.docker-tag }} --tag ${{ env.docker-image }}:${{ github.sha }} --http-probe-off -exec "Continue" --continue-after exec
 
       - name: Push To ghcr.io
         id: push-to-ghcr
