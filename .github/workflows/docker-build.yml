@@ -10,7 +10,7 @@ on:
 
 env:
   docker-image: wikibot-canary
-  docker-tags: v1-alpha ${{ github.sha }}
+  docker-tag: v1-alpha ${{ github.sha }}
 
 jobs:
   build:
@@ -32,14 +32,14 @@ jobs:
       - name: Build Container
         id: build-image
         run: |
-          ./dist_linux/docker-slim build ./docker/Dockerfile --dockerfile-context $GITHUB_WORKSPACE --tags ${{ env.docker-image }}:${{ env.docker-tags }} --http-probe-off -exec "Continue" --continue-after exec
+          ./dist_linux/docker-slim build ./docker/Dockerfile --dockerfile-context $GITHUB_WORKSPACE --tag ${{ env.docker-image }}:${{ env.docker-tag }} --tag ${{ env.docker-image }}:${{ github.sha }} --http-probe-off -exec "Continue" --continue-after exec
 
       - name: Push To ghcr.io
         id: push-to-ghcr
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ env.docker-image }}
-          tags: ${{ env.docker-tags }}
+          tags: ${{ env.docker-tag }} ${{ github.sha }}
           registry: ghcr.io/shitcorp
           username: shitcorp
           password: ${{ secrets.GITHUB_TOKEN }}
