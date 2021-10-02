@@ -26,7 +26,7 @@ jobs:
       - name: Install DockerSlim
         id: install-docker-slim
         run: |
-          curl -L -O https://github.com/docker-slim/docker-slim/releases/latest/download/dist_linux.tar.gz
+          curl -L -O https://downloads.dockerslim.com/releases/latest/dist_linux.tar.gz
           tar -zxvf dist_linux.tar.gz
 
       - name: Build Container
