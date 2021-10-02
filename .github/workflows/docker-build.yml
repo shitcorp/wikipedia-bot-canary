@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+env:
+  docker-image: wikibot-canary
+  docker-tag: v1-alpha
+
 jobs:
   build:
     name: Build Image
@@ -19,24 +23,26 @@ jobs:
           # fetch all commits to get last updated time or other git log info
           fetch-depth: 0
 
+      - name: Install DockerSlim
+        id: install-docker-slim
+        run: |
+          curl -L -O https://downloads.dockerslim.com/releases/latest/dist_linux.tar.gz
+          tar -zxvf dist_linux.tar.gz
+
       - name: Build Container
         id: build-image
-        uses: redhat-actions/buildah-build@v2
-        with:
-          image: wikibot-canary
-          tags: v1-alpha ${{ github.sha }}
-          containerfiles: |
-            ./docker/Dockerfile
+        run: |
+          ./dist_linux/docker-slim build --dockerfile ./docker/Dockerfile --dockerfile-context $GITHUB_WORKSPACE --tag ${{ env.docker-image }}:${{ env.docker-tag }} --tag ${{ env.docker-image }}:${{ github.sha }} --http-probe-off -exec echo "Continue" --continue-after exec
+
       - name: Push To ghcr.io
         id: push-to-ghcr
         uses: redhat-actions/push-to-registry@v2
         with:
-          image: ${{ steps.build-image.outputs.image }}
-          tags: ${{ steps.build-image.outputs.tags }}
+          image: ${{ env.docker-image }}
+          tags: ${{ env.docker-tag }} ${{ github.sha }}
           registry: ghcr.io/shitcorp
           username: shitcorp
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print image url
         run: echo "Image pushed to ${{ steps.push-to-ghcr.outputs.registry-paths }}"
-
