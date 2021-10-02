@@ -95,6 +95,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://giuliopime.dev/"><img src="https://avatars.githubusercontent.com/u/60524738?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Giuliopime</b></sub></a><br /><a href="https://github.com/shitcorp/wikipedia-bot-canary/commits?author=Giuliopime" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/aha999"><img src="https://avatars.githubusercontent.com/u/50620416?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Klemen Skerbiš</b></sub></a><br /><a href="#ideas-aha999" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="http://neganov.ru/"><img src="https://avatars.githubusercontent.com/u/114060?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Artiom Neganov</b></sub></a><br /><a href="#ideas-OnkelTem" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="http://swadroid.wordpress.com"><img src="https://avatars.githubusercontent.com/u/461393?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Juan Miguel Boyero Corral</b></sub></a><br /><a href="#infra-Amab" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
   </tr>
 </table>
 
