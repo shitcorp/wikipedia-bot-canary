@@ -10,7 +10,7 @@ on:
 
 env:
   docker-image: wikibot-canary
-  docker-tag: v1-alpha ${{ github.sha }}
+  docker-tag: v1-alpha
 
 jobs:
   build:
